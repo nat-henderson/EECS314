@@ -5,27 +5,39 @@ import java.util.Map;
 
 public class Memory {
 	/*Most of memory is empty; I'm going to go for a map of integer (address) to Word*/
-	private Map<Integer, Word> memory;
+	private Map<Integer, Byte> memory;
 	
 	public Memory() {
-		this.memory = new HashMap<Integer, Word>();
+		this.memory = new HashMap<Integer, Byte>();
 	}
 	
 	public Word getWord(int address) throws MemoryLocationNotInitializedException {
-		if (this.memory.containsKey(address)) {
-			return this.memory.get(address);
+		byte[] bytearr = new byte[4];
+		for (int i = 0; i < 4; i++) {
+			if (this.memory.containsKey(address + i)) {
+				bytearr[i] = this.memory.get(address + i);
+			} else {
+				throw new MemoryLocationNotInitializedException();
+			}
 		}
-		else if (this.memory.containsKey(address - 1)) {
-			byte[] bytes = this.memory.get(address - 1).asByteArray();
-			// here lies boredom
-		}
-		else {
-			throw new MemoryLocationNotInitializedException();
-		}
+		return new Word(bytearr);
 	}
 	
 	public void setWord(int address, Word word) {
-		this.memory.put(address, word);
+		for (int i = 0; i < 4; i++) {
+			this.memory.put(address + i, word.asByteArray()[i]);
+		}
+	}
+	
+	public void setByte(int address, byte b) {
+		this.memory.put(address, b);
+	}
+	
+	public byte getByte(int address) throws MemoryLocationNotInitializedException {
+		if (this.memory.containsKey(address)) {
+			return this.memory.get(address);
+		}
+		throw new MemoryLocationNotInitializedException();
 	}
 
 }

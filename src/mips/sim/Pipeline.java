@@ -14,10 +14,19 @@ public class Pipeline {
 		this.pipelineStages = new ArrayList<Stage>();
 		this.regFile = new RegisterFile();
 		this.memory = new Memory();
-		int initCounter = this.programCounter;
+		int initCounter = programCounter;
 		for (Instruction i : initialInstructions) {
-			this.memory.setWord(programCounter, i.toWord());
-			programCounter += 4;
+			this.memory.setWord(initCounter, i.toWord());
+			initCounter += 4;
+		}
+	}
+	
+	public void run(int steps) {
+		for (int i = 0; i < steps; i++) {
+			for (int pipelineStage = this.pipelineStages.size() - 1;
+					pipelineStage <= 0; pipelineStage--) {
+				
+			}
 		}
 	}
 

@@ -1,6 +1,6 @@
 package mips.sim;
 
-public class RegisterNeedsForwardingException extends Exception {
+public class DoubleLoadException extends Exception {
 	private static final long serialVersionUID = 1L;
 
 }

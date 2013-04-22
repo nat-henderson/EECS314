@@ -8,14 +8,23 @@ public abstract class Instruction {
 	
 	private Memory memory;
 	private RegisterFile regFile;
-	private List<Register> inputRegisters;
-	private List<Register> outputRegisters;
+	private Word instruction;
+	
+	// oh no protected access
+	protected List<Register> inputRegisters;
+	protected List<Register> outputRegisters;
 	
 	public Instruction(Memory memory, RegisterFile regFile, Word instruction) {
 		this.memory = memory;
 		this.regFile = regFile;
+		this.instruction = instruction;
 		this.inputRegisters = new ArrayList<Register>();
 		this.outputRegisters = new ArrayList<Register>();
+	}
+	
+	// no reason this would ever change
+	public Word toWord() {
+		return instruction;
 	}
 
 	public List<Register> getInputRegisters() {
@@ -45,7 +54,5 @@ public abstract class Instruction {
 	public abstract void doMemory();
 	
 	public abstract void writeback();
-
-	public abstract Word toWord();
 	
 }

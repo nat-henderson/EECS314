@@ -5,9 +5,13 @@ import java.util.List;
 
 public abstract class Stage {
 	private List<Stage> forwardTo;
-	private List<Instruction> instructions;
-	private int numberOfCycles;
-	private boolean hasHadInsertThisCycle;
+	protected List<Instruction> instructions;
+	protected int numberOfCycles;
+	protected boolean hasHadInsertThisCycle;
+	
+	public Stage() {
+		this(1);
+	}
 	
 	public Stage(int nCycles) {
 		this.numberOfCycles = nCycles;
@@ -25,6 +29,8 @@ public abstract class Stage {
 				this.load(null);
 			} catch (DoubleLoadException e) {
 				// this can't happen for obvious reasons
+				throw new RuntimeException();
+				// but we should see it if it ever does, I guess.
 			}
 		}
 		this.hasHadInsertThisCycle = false;
@@ -45,7 +51,12 @@ public abstract class Stage {
 	}
 	
 	public Instruction getCurrentInstruction(int idx) {
-		return this.instructions.get(idx);
+		if (idx < this.numberOfCycles) {
+			return this.instructions.get(idx);	
+		}
+		else {
+			throw new RuntimeException("Invalid index");
+		}
 	}
 	
 	public void load(Instruction i) throws DoubleLoadException{

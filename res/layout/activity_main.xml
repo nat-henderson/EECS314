@@ -9,21 +9,23 @@
     tools:context=".MainActivity" >
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/loadButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="174dp"
+        android:onClick="onClick"
         android:text="@string/load_file" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/newButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button2"
+        android:layout_above="@+id/loadButton"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="37dp"
+        android:onClick="onClick"
         android:text="@string/new_file" />
 
 </RelativeLayout>

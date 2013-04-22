@@ -3,5 +3,10 @@
 
     <string name="app_name">EECS 314</string>
     <string name="title_item_detail">Item Detail</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="load_file">Load File</string>
+    <string name="new_file">New MIPS Instruction Set</string>
 
 </resources>

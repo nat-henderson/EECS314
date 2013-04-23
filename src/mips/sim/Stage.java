@@ -40,7 +40,7 @@ public abstract class Stage {
 		if (this.instructions.size() < this.numberOfCycles) {
 			return null;
 		}
-		Instruction inst = this.instructions.remove(this.numberOfCycles - 1);
+		Instruction inst = this.instructions.remove(this.numberOfCycles);
 		if (inst == null) {
 			return inst;
 		}

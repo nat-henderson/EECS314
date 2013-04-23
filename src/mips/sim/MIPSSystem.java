@@ -72,6 +72,7 @@ public class MIPSSystem {
 		}
 		if (output != null) {
 			System.out.println("Output:  " + output.toString());
+			System.out.println("RegValue:" + output.outputRegisters.get(0).getWord().asInt());
 		}
 		else {
 			System.out.println("Null output");
@@ -81,6 +82,7 @@ public class MIPSSystem {
 	public static void main(String[] args) throws MemoryLocationNotInitializedException {
 		Memory mem = new Memory();
 		RegisterFile regFile = new RegisterFile();
+		regFile.putRegister(0, 1);
 		List<Instruction> instList = new ArrayList<Instruction>();
 		instList.add(new AddInstruction(mem, regFile, new Word(0)));
 		instList.add(new AddInstruction(mem, regFile, new Word(0)));
@@ -88,6 +90,7 @@ public class MIPSSystem {
 		instList.add(new AddInstruction(mem, regFile, new Word(0)));
 		instList.add(new AddInstruction(mem, regFile, new Word(0)));
 		instList.add(new AddInstruction(mem, regFile, new Word(0)));
+		System.out.println(instList);
 		MIPSSystem ms = new MIPSSystem(instList, 1,1,1,1);
 		ms.run(15);
 	}

@@ -2,14 +2,16 @@ package mips.sim;
 
 public class RegisterFile {
 	
-	private Word[] registers = new Word[32];
+	private Word[] registers;
 	
 	public RegisterFile() {
-		System.out.println("Constructed");
+		this.registers = new Word[32];
+		for (int i = 0; i < 32; i++) {
+			this.registers[i] = new Word(0);
+		}
 	}
 	
 	public Register getRegister(int index) {
-		System.out.println("Request for register:  " + index);
 		return new Register(index, registers[index]);
 	}
 	

@@ -7,11 +7,12 @@ public class ExecuteStage extends Stage {
 	}
 	
 	protected void execute() {
-		if (this.instructions.size() == numberOfCycles) {
-			Instruction inst = this.instructions.get(numberOfCycles - 1);
+		if (this.instructions.size() == numberOfCycles + 1) {
+			Instruction inst = this.instructions.get(numberOfCycles);
 			if (inst != null) {
 				inst.executeInstruction();
 			}
+			System.out.println(this.instructions.toString());
 		}
 	}
 

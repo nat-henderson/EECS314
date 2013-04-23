@@ -8,8 +8,8 @@ public class InstructionDecodeStage extends Stage {
 
 	@Override
 	protected void execute() {
-		if (this.instructions.size() == numberOfCycles) {
-			Instruction inst = this.instructions.get(numberOfCycles - 1);
+		if (this.instructions.size() == numberOfCycles + 1) {
+			Instruction inst = this.instructions.get(numberOfCycles);
 			if (inst != null) {
 				inst.instructionDecode();
 			}

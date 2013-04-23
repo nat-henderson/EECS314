@@ -54,5 +54,14 @@ public abstract class RTypeInstruction extends Instruction {
 	public void writeback() {
 		this.regFile.putRegister(this.registerRd, this.outputRegisters.get(0).getWord());
 	}
+	
+	protected abstract Word getResult();
+	
+	@Override
+	public void executeInstruction() {
+		this.outputRegisters.clear();
+		Word result = this.getResult();
+		this.outputRegisters.add(new Register(this.registerRd, result));
+	}
 
 }

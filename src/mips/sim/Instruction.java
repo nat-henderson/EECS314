@@ -55,4 +55,8 @@ public abstract class Instruction extends Word {
 		// this will be a MASSIVE pain in the ass to write.
 		return null;
 	}	
+	
+	public String toString() {
+		return "Instruction:  " + this.inputRegisters.toString() + "   " + this.outputRegisters.toString();
+	}
 }

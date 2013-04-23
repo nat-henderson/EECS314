@@ -18,6 +18,9 @@ public abstract class Stage {
 		this.forwardTo = new ArrayList<Stage>();
 		this.instructions = new ArrayList<Instruction>(nCycles);
 		this.hasHadInsertThisCycle = false;
+		for (int i = 0; i < nCycles; i++) {
+			this.instructions.add(null);
+		}
 	}
 	
 	protected abstract void execute();
@@ -51,6 +54,11 @@ public abstract class Stage {
 	}
 	
 	protected void acceptForwardedRegister(Register forward) {
+		// before a value is computed, the word is null.
+		if (forward.getWord() == null) {
+			return;
+		}
+		
 		if (this.instructions.size() > 0) {
 			this.instructions.get(0).acceptForwardedRegister(forward);
 		}

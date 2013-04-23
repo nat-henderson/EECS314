@@ -4,7 +4,12 @@ public class RegisterFile {
 	
 	private Word[] registers = new Word[32];
 	
+	public RegisterFile() {
+		System.out.println("Constructed");
+	}
+	
 	public Register getRegister(int index) {
+		System.out.println("Request for register:  " + index);
 		return new Register(index, registers[index]);
 	}
 	

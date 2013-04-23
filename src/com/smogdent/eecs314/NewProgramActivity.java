@@ -17,11 +17,12 @@ import android.widget.AdapterView.OnItemClickListener;
 
 
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-public class NewInstructionActivity extends ListActivity {
+public class NewProgramActivity extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_new_program);
         
         //dummy instruction
         String[] inst = {"addi", "lw"};
@@ -57,8 +58,13 @@ public class NewInstructionActivity extends ListActivity {
         };
         
         getListView().setOnItemClickListener(listListener);
-        findViewById(R.id.newInstructionButton).setOnClickListener(listener);
-        setContentView(R.layout.activity_new_instruction);
+
+        View instructionButton = findViewById(R.id.newInstructionButton);
+        if(instructionButton != null){
+            instructionButton.setOnClickListener(listener);
+        }
+        
+        
     }
 
     @Override

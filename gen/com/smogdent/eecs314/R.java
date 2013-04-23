@@ -63,7 +63,7 @@ public final class R {
         public static final int activity_item_list=0x7f030004;
         public static final int activity_item_twopane=0x7f030005;
         public static final int activity_main=0x7f030006;
-        public static final int activity_new_instruction=0x7f030007;
+        public static final int activity_new_program=0x7f030007;
         public static final int fragment_item_detail=0x7f030008;
     }
     public static final class menu {

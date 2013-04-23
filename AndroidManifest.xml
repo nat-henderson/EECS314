@@ -39,7 +39,7 @@
         <activity android:name="com.smogdent.eecs314.InstructionListActivity" >
         </activity>
         <activity
-            android:name="com.smogdent.eecs314.NewInstructionActivity"
+            android:name="com.smogdent.eecs314.NewProgramActivity"
             android:label="@string/title_activity_new_instruction" >
         </activity>
         <activity

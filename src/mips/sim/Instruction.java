@@ -54,5 +54,11 @@ public abstract class Instruction {
 	public abstract void doMemory();
 	
 	public abstract void writeback();
-	
+
+	public static Instruction fromWord(Memory memory2, RegisterFile regFile2,
+			Word nextInst) {
+		// this needs to return the right KIND of instruction... woooo
+		// this will be a MASSIVE pain in the ass to write.
+		return null;
+	}	
 }

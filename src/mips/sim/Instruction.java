@@ -51,9 +51,9 @@ public abstract class Instruction extends Word {
 	
 	/**
 	 * 
-	 * @return the id of the string resource of the name of the instruction (ADD, ADDI, ect)
+	 * @return the name of the instruction (ADD, ADDI, ect)
 	 */
-	public abstract int getInstructionNameId();
+	public abstract String getInstructionName();
 
 	public static Instruction fromWord(Memory memory2, RegisterFile regFile2,
 			Word nextInst) {

@@ -17,4 +17,9 @@ public class AddInstruction extends RTypeInstruction {
 		return new Word(one + two);
 	}
 
+    @Override
+    public String getInstructionName() {
+        return "ADD";                
+    }
+
 }

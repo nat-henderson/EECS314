@@ -30,4 +30,8 @@ public abstract class ITypeInstruction extends Instruction {
 		this.inputRegisters.add(new Register(this.registerRs, null));
 		this.outputRegisters.add(new Register(this.registerRt, null));
 	}
+	
+	public int getImmediate(){
+	    return immediate;
+	}
 }

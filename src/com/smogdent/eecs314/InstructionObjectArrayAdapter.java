@@ -5,6 +5,7 @@ import java.util.List;
 import android.content.Context;
 import mips.sim.Instruction;
 import mips.sim.Register;
+import mips.sim.instructions.ITypeInstruction;
 
 public class InstructionObjectArrayAdapter extends TwoLineArrayAdapter<Instruction> {
 
@@ -17,7 +18,7 @@ public class InstructionObjectArrayAdapter extends TwoLineArrayAdapter<Instructi
 
     @Override
     public String lineOneText(Instruction t) {
-        return context.getResources().getString(t.getInstructionNameId());
+        return t.getInstructionName();
         
     }
 
@@ -26,7 +27,21 @@ public class InstructionObjectArrayAdapter extends TwoLineArrayAdapter<Instructi
         List<Register> inRegs = t.getInputRegisters();
         List<Register> outRegs = t.getOutputRegisters();
         
-        return null;
+        StringBuilder args = new StringBuilder();
+        
+        for (Register r: inRegs){
+            args.append("$" + r.getId() + " ");
+        }
+        
+        for (Register r: outRegs){
+            args.append("$" + r.getId() + " ");
+        }
+        
+        if (t instanceof mips.sim.instructions.ITypeInstruction){
+            args.append(((ITypeInstruction) t).getImmediate());
+        }
+        
+        return args.toString();
     }
 
 }

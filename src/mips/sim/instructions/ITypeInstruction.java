@@ -2,6 +2,7 @@ package mips.sim.instructions;
 
 import mips.sim.Instruction;
 import mips.sim.Memory;
+import mips.sim.Register;
 import mips.sim.RegisterFile;
 import mips.sim.Word;
 
@@ -26,7 +27,7 @@ public abstract class ITypeInstruction extends Instruction {
 		bitmask = 0xFC000000; // mask bits 26-31
 		this.opcode = (instructionWord & bitmask) >> 26;
 		
-		this.inputRegisters.add(regFile.getRegister(registerRs));
-		this.outputRegisters.add(regFile.getRegister(registerRt));
+		this.inputRegisters.add(new Register(this.registerRs, null));
+		this.outputRegisters.add(new Register(this.registerRt, null));
 	}
 }

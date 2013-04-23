@@ -19,4 +19,8 @@ public class RegisterFile {
 	public void putRegister(int index, byte[] value) {
 		registers[index] = new Word(value);
 	}
+	
+	public void putRegister(int index, Word word) {
+		registers[index] = word;
+	}
 }

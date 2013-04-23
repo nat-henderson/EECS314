@@ -4,29 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-public abstract class Instruction {
+public abstract class Instruction extends Word {
 	
-	private Memory memory;
-	private RegisterFile regFile;
-	private Word instruction;
+	protected Memory memory;
+	protected RegisterFile regFile;
 	
 	// oh no protected access
 	protected List<Register> inputRegisters;
 	protected List<Register> outputRegisters;
 	
 	public Instruction(Memory memory, RegisterFile regFile, Word instruction) {
+		super(instruction.asByteArray());
 		this.memory = memory;
 		this.regFile = regFile;
-		this.instruction = instruction;
 		this.inputRegisters = new ArrayList<Register>();
 		this.outputRegisters = new ArrayList<Register>();
 	}
 	
-	// no reason this would ever change
-	public Word toWord() {
-		return instruction;
-	}
-
 	public List<Register> getInputRegisters() {
 		return new ArrayList<Register>(this.inputRegisters);
 	}

@@ -1,0 +1,52 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".NewInstructionActivity" >
+
+    <GridLayout
+        android:id="@+id/newinstlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:columnCount="2"
+        android:orientation="horizontal" >
+
+        <Space
+            android:layout_column="1"
+            android:layout_gravity="fill_vertical"
+            android:layout_row="3" />
+
+        <Button
+            android:id="@+id/goButton"
+            android:layout_column="0"
+            android:layout_gravity="right|bottom"
+            android:layout_marginLeft="28dp"
+            android:layout_row="3"
+            android:text="@string/emulate_mips" />
+
+        <Button
+            android:id="@+id/newInstructionButton"
+            android:layout_column="0"
+            android:layout_gravity="left|bottom"
+            android:layout_marginRight="14dp"
+            android:layout_row="3"
+            android:text="@string/new_instruction" />
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="354dp"
+            android:layout_column="0"
+            android:layout_gravity="left|top"
+            android:layout_row="3" >
+        </ListView>
+
+    </GridLayout>
+
+</RelativeLayout>

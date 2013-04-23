@@ -9,4 +9,24 @@
     <string name="load_file">Load File</string>
     <string name="new_file">New MIPS Instruction Set</string>
 
+    <string-array name="add_instructions">
+        <item>add</item>
+        <item>addi</item>
+        <item>addiu</item>
+    </string-array>
+    <string-array name="instruction_categories">
+        <item>Mathematical Operations</item>
+        <item>Logical Operations</item>
+        <item>Store and Load</item>
+        <item>Branch and Jump</item>
+    </string-array>
+    <string-array name="mathematical_sets">
+        <item>Add</item>
+    </string-array>
+
+    <string name="title_activity_new_instruction">NewInstructionActivity</string>
+    <string name="new_instruction">New Instruction</string>
+    <string name="emulate_mips">Go!</string>
+    <string name="title_activity_catagory_list">CatagoryListActivity</string>
+
 </resources>

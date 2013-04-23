@@ -12,9 +12,8 @@
         android:id="@+id/loadButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="174dp"
+        android:layout_centerVertical="true"
         android:onClick="onClick"
         android:text="@string/load_file" />
 
@@ -24,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/loadButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="37dp"
+        android:layout_marginBottom="28dp"
         android:onClick="onClick"
         android:text="@string/new_file" />
 

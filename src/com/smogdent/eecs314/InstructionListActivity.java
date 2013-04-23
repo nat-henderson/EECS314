@@ -18,32 +18,28 @@ public class InstructionListActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (savedInstanceState.containsKey("set")){
+        setContentView(R.layout.activity_catagory_list);
+        
+        String[] sets = getResources().getStringArray(R.array.add_instructions);
 
-            //TODO: multiple instruction category implementation
-            String[] instructions = getResources().getStringArray(R.array.add_instructions);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, sets);
+        
+        this.setListAdapter(adapter);
 
-            this.setListAdapter(new ArrayAdapter<String>(this, R.layout.activity_instruction_list, android.R.id.text1, instructions));
+        ListView listView = getListView();
 
-            ListView listView = getListView();
+        listView.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                    int position, long id) {
 
-            listView.setOnItemClickListener(new OnItemClickListener() {
-                public void onItemClick(AdapterView<?> parent, View view,
-                        int position, long id) {
+                // selected item
+                String instruction = ((TextView) view).getText().toString();
+                // bundling level, instruction
+                Bundle bundle = new Bundle();
+                bundle.putString("instruction", instruction);
+                startActivity(new Intent(getApplicationContext(), ItemDetailActivity.class),bundle);
 
-                    // selected item
-                    String instruction = ((TextView) view).getText().toString();
-
-                    // bundling level, instruction
-
-                    Bundle bundle = new Bundle();
-
-                    bundle.putString("instruction", instruction);
-
-                    startActivity(new Intent(getApplicationContext(), ItemDetailActivity.class),bundle);
-
-                }
-            });
-        }
+            }
+        });
     }
 }

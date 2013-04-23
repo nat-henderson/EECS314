@@ -10,10 +10,18 @@
     <string name="new_file">New MIPS Program</string>
 
     <string-array name="add_instructions">
-        <item>add</item>
-        <item>addi</item>
-        <item>addiu</item>
+        <item>ADD:Adds two registers and stores the result in a register</item>
+        <item>ADDI:Adds a register and a sign-extended immediate value and stores the result in a register</item>
+        <item>ADDU</item>
+        <item>ADDIU</item>
     </string-array>
+    <string-array name="add_instruction_descripton">
+        <item>Adds two registers and stores the result in a register</item>
+        <item>Adds a register and a sign-extended immediate value and stores the result in a register</item>
+        <item>Adds a register and a sign-extended immediate value and stores the result in a register without overflow</item>
+        <item>Adds two registers and stores the result in a register without overflow</item>
+    </string-array>
+    
     <string-array name="instruction_categories">
         <item>Mathematical Operations</item>
         <item>Logical Operations</item>

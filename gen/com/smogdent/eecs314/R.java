@@ -9,9 +9,10 @@ package com.smogdent.eecs314;
 
 public final class R {
     public static final class array {
+        public static final int add_instruction_descripton=0x7f060001;
         public static final int add_instructions=0x7f060000;
-        public static final int instruction_categories=0x7f060001;
-        public static final int mathematical_sets=0x7f060002;
+        public static final int instruction_categories=0x7f060002;
+        public static final int mathematical_sets=0x7f060003;
     }
     public static final class attr {
     }

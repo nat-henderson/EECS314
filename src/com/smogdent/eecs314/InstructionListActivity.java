@@ -20,9 +20,9 @@ public class InstructionListActivity extends ListActivity {
 
         setContentView(R.layout.activity_catagory_list);
         
-        String[] sets = getResources().getStringArray(R.array.add_instructions);
+        String[] set = getResources().getStringArray(R.array.add_instructions);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, sets);
+        ArrayAdapter<String> adapter = new InstructionListArrayAdapter(this, set);
         
         this.setListAdapter(adapter);
 

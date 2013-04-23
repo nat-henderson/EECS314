@@ -21,7 +21,7 @@ public class GroupListActivity extends ListActivity {
       
         String[] sets = getResources().getStringArray(R.array.mathematical_sets);
 
-        this.setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, R.id.list, sets));
+        this.setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, sets));
 
         ListView listView = getListView();
 

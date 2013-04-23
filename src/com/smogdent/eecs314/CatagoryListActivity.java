@@ -23,27 +23,24 @@ public class CatagoryListActivity extends ListActivity {
       
         String[] categories = getResources().getStringArray(R.array.instruction_categories);
 
-        this.setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, R.id.list, categories));
+        this.setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, categories));
 
         ListView listView = getListView();
 
-        listView.setOnItemClickListener(new OnItemClickListener() {
+        OnItemClickListener listListener = new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                     int position, long id) {
 
                 // selected item
                 String category = ((TextView) view).getText().toString();
-
                 // bundling level, instruction
-
                 Bundle bundle = new Bundle();
-
                 bundle.putString("category", category);
-
                 startActivity(new Intent(getApplicationContext(), GroupListActivity.class),bundle);
-
             }
-        });
+        };
+        
+        listView.setOnItemClickListener(listListener);
     }
 
     @Override

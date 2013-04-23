@@ -23,7 +23,7 @@ public class InstructionListActivity extends ListActivity {
             //TODO: multiple instruction category implementation
             String[] instructions = getResources().getStringArray(R.array.add_instructions);
 
-            this.setListAdapter(new ArrayAdapter<String>(this, R.layout.activity_instruction_list, R.id.list, instructions));
+            this.setListAdapter(new ArrayAdapter<String>(this, R.layout.activity_instruction_list, android.R.id.text1, instructions));
 
             ListView listView = getListView();
 

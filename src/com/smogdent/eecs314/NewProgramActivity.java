@@ -38,7 +38,7 @@ public class NewProgramActivity extends ListActivity {
         OnClickListener listener = new OnClickListener(){
             public void onClick(View view){
                 if (view.getId() == R.id.newInstructionButton){
-                    startActivity(new Intent(getApplicationContext(), InstructionListActivity.class));
+                    startActivity(new Intent(getApplicationContext(), CatagoryListActivity.class));
                 }
             }
         };
@@ -53,7 +53,7 @@ public class NewProgramActivity extends ListActivity {
                 // bundling level, instruction
                 Bundle bundle = new Bundle();
                 bundle.putString("instruction", instruction);
-                startActivity(new Intent(getApplicationContext(), GroupListActivity.class),bundle);
+                startActivity(new Intent(getApplicationContext(), ItemDetailActivity.class),bundle);
             }
         };
         

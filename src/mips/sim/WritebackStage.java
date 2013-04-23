@@ -7,8 +7,8 @@ public class WritebackStage extends Stage{
 	}
 	
 	protected void execute() {
-		for (Instruction i : this.instructions) {
-			i.writeback();
+		if (this.instructions.size() == numberOfCycles) {
+			this.instructions.get(numberOfCycles - 1).writeback();
 		}
 	}
 

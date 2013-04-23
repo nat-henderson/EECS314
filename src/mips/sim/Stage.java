@@ -44,12 +44,34 @@ public abstract class Stage {
 		for (Stage forwardTo : this.forwardTo) {
 			for (Register forward: inst.getOutputRegisters()) {
 				// we can only forward to the beginning of a stage
-				forwardTo.getCurrentInstruction(0).acceptForwardedRegister(forward);
+				forwardTo.acceptForwardedRegister(forward);
 			}
 		}
 		return inst;
 	}
 	
+	protected void acceptForwardedRegister(Register forward) {
+		if (this.instructions.size() > 0) {
+			this.instructions.get(0).acceptForwardedRegister(forward);
+		}
+		// loop runs backwards because we alter the size but still only need to keep moving forward
+		for (int i = this.instructions.size(); i > 1 ; i--) {
+			boolean needsForwarding = false;
+			for (Register r : this.instructions.get(i).inputRegisters) {
+				if (r.getId() == forward.getId()) {
+					needsForwarding = true;
+				}
+			}
+			if (needsForwarding) {
+				// we need to add stalls equal to the difference between the current
+				// location and the start of the stage.
+				for (int j = 0; j < i; j++) {
+					this.instructions.add(i + 1, null);
+				}
+			}
+		}
+	}
+
 	public Instruction getCurrentInstruction(int idx) {
 		if (idx < this.numberOfCycles) {
 			return this.instructions.get(idx);	

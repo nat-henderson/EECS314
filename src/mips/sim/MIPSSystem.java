@@ -1,6 +1,7 @@
 package mips.sim;
 
 import java.util.ArrayList;
+import java.util.FormatterClosedException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +17,36 @@ public class MIPSSystem {
 	private WritebackStage wStage;
 	private Map<Integer, Instruction> instrMemory;
 	
+	public enum StageType {
+		ID, EX, MEM, WB;
+	}
+	
 	public MIPSSystem() {
 		this(new ArrayList<Instruction>(), 1,1,1,1);
+	}
+	
+	public void setupForwarding(StageType forwardFrom, StageType forwardTo) {
+		Stage from;
+		Stage to;
+		if (forwardFrom == StageType.ID) {
+			from = this.idStage;
+		} else if (forwardFrom == StageType.EX) {
+			from = this.eStage;
+		} else if (forwardFrom == StageType.MEM) {
+			from = this.mStage;
+		} else {
+			from = this.wStage;
+		}
+		if (forwardTo == StageType.ID) {
+			to = this.idStage;
+		} else if (forwardTo == StageType.EX) {
+			to = this.eStage;
+		} else if (forwardTo == StageType.MEM) {
+			to = this.mStage;
+		} else {
+			to = this.wStage;
+		}
+		from.acceptForwardingConfiguration(to);
 	}
 	
 	public MIPSSystem(List<Instruction> initialInstructions, int idSteps, int eSteps,
@@ -36,7 +65,7 @@ public class MIPSSystem {
 		system = this;
 	}
 	
-	public void run(int steps) throws MemoryLocationNotInitializedException {
+	public void run(int steps) {
 		for (int i = 0; i < steps; i++) {
 			this.run();
 		}
@@ -54,7 +83,7 @@ public class MIPSSystem {
 		this.wStage.flush();
 	}
 	
-	public void run() throws MemoryLocationNotInitializedException {
+	public void run() {
 		Instruction nextInst = this.instrMemory.get(programCounter);
 		programCounter += 4;
 		Instruction output = this.wStage.doExecute();
@@ -79,7 +108,7 @@ public class MIPSSystem {
 		}
 	}
 	
-	public static void main(String[] args) throws MemoryLocationNotInitializedException {
+	public static void main(String[] args) {
 		Memory mem = new Memory();
 		RegisterFile regFile = new RegisterFile();
 		regFile.putRegister(0, 1);
@@ -92,6 +121,7 @@ public class MIPSSystem {
 		instList.add(new AddInstruction(mem, regFile, new Word(0)));
 		System.out.println(instList);
 		MIPSSystem ms = new MIPSSystem(instList, 1,1,1,1);
+		ms.setupForwarding(StageType.EX, StageType.EX);
 		ms.run(15);
 	}
 }

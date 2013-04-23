@@ -59,7 +59,7 @@ public abstract class Stage {
 			return;
 		}
 		
-		if (this.instructions.size() > 0) {
+		if (this.instructions.size() > 0 && this.instructions.get(0) != null) {
 			this.instructions.get(0).acceptForwardedRegister(forward);
 		}
 		// loop runs backwards because we alter the size but still only need to keep moving forward

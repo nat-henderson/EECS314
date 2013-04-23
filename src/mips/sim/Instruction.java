@@ -33,9 +33,9 @@ public abstract class Instruction extends Word {
 		Register register = null;
 		for (ListIterator<Register> iterator = this.inputRegisters.listIterator();
 				iterator.hasNext(); register = iterator.next()) {
-			if (register.getId() == r.getId()) {
-				iterator.add(r);
+			if (register != null && register.getId() == r.getId()) {
 				iterator.remove();
+				iterator.add(r);
 			}
 		}
 	}

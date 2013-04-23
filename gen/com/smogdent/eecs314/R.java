@@ -80,6 +80,7 @@ public final class R {
         public static final int new_file=0x7f050006;
         public static final int new_instruction=0x7f050008;
         public static final int title_activity_catagory_list=0x7f05000a;
+        public static final int title_activity_group_list=0x7f05000b;
         public static final int title_activity_main=0x7f050002;
         public static final int title_activity_new_instruction=0x7f050007;
         public static final int title_item_detail=0x7f050001;

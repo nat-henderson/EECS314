@@ -28,5 +28,6 @@
     <string name="new_instruction">New Instruction</string>
     <string name="emulate_mips">Go!</string>
     <string name="title_activity_catagory_list">CatagoryListActivity</string>
+    <string name="title_activity_group_list">GroupListActivity</string>
 
 </resources>

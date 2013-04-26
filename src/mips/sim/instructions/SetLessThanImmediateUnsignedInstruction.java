@@ -5,9 +5,9 @@ import mips.sim.Memory;
 import mips.sim.RegisterFile;
 import mips.sim.Word;
 
-public class SetLessThanImmediateUnsigned extends ITypeInstruction {
+public class SetLessThanImmediateUnsignedInstruction extends ITypeInstruction {
 
-	public SetLessThanImmediateUnsigned(Memory memory, RegisterFile regFile,
+	public SetLessThanImmediateUnsignedInstruction(Memory memory, RegisterFile regFile,
 			Word instruction) {
 		super(memory, regFile, instruction);
 		// TODO Auto-generated constructor stub

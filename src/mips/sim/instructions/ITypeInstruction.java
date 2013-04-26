@@ -26,6 +26,13 @@ public abstract class ITypeInstruction extends Instruction {
 		this.registerRs = (instructionWord & bitmask) >> 21;
 		bitmask = 0xFC000000; // mask bits 26-31
 		this.opcode = (instructionWord & bitmask) >> 26;
+		
+		// sign extend the immediate
+		bitmask = 0x8000; // extract bit 15
+		int sign = this.immediate & bitmask;
+		if (sign == 0x800) { // if negative number, extend sign
+			this.immediate |= 0xffff0000;
+		}
 	}
 	
 	protected abstract Word getResult();

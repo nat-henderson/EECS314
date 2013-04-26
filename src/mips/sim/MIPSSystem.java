@@ -76,6 +76,11 @@ public class MIPSSystem {
 		system.flushAll();
 	}
 	
+	public static void moveProgramCounter(int numInstructions) {
+		system.programCounter += 4 * numInstructions;
+		system.flushAll();
+	}
+	
 	public void flushAll() {
 		this.idStage.flush();
 		this.eStage.flush();

@@ -81,6 +81,13 @@ public class MIPSSystem {
 		system.flushAll();
 	}
 	
+	public static void jumpProgramCounter(int newPcLowerBits) {
+		int bitmask = 0xFC000000;
+		int newPcUpperBits = system.programCounter & bitmask;
+		system.programCounter = newPcUpperBits | newPcLowerBits;
+		system.flushAll();
+	}
+	
 	public void flushAll() {
 		this.idStage.flush();
 		this.eStage.flush();

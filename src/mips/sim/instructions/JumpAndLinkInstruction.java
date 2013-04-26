@@ -6,11 +6,11 @@ import mips.sim.Memory;
 import mips.sim.RegisterFile;
 import mips.sim.Word;
 
-public class JumpInstruction extends Instruction {
+public class JumpAndLinkInstruction extends Instruction {
 
 	private int address;
 	
-	public JumpInstruction(Memory memory, RegisterFile regFile, Word instruction) {
+	public JumpAndLinkInstruction(Memory memory, RegisterFile regFile, Word instruction) {
 		super(memory, regFile, instruction);
 		
 		int bitmask = 0x3FFFFFFF;
@@ -25,6 +25,7 @@ public class JumpInstruction extends Instruction {
 	@Override
 	public void executeInstruction() {
 		this.outputRegisters.clear();
+		this.regFile.putRegister(31, MIPSSystem.getProgramCounter() + 8);
 		MIPSSystem.jumpProgramCounter(this.address); // for great justice
 	}
 
@@ -40,7 +41,7 @@ public class JumpInstruction extends Instruction {
 
 	@Override
 	public String getInstructionName() {
-		return "J"; // http://en.wikipedia.org/wiki/Agent_J
+		return "JAL"; // http://en.wikipedia.org/wiki/Agent_J
 	}
 
 }

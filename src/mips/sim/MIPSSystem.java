@@ -88,6 +88,10 @@ public class MIPSSystem {
 		system.flushAll();
 	}
 	
+	public static int getProgramCounter() {
+		return system.programCounter;
+	}
+	
 	public void flushAll() {
 		this.idStage.flush();
 		this.eStage.flush();

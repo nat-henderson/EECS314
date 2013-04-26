@@ -65,4 +65,10 @@ public abstract class Instruction extends Word {
 	public String toString() {
 		return "Instruction:  " + this.inputRegisters.toString() + "   " + this.outputRegisters.toString();
 	}
+	
+	protected static long unsignedLongFromInt(int i) {
+		long bitmask = 0x00000000FFFFFFFF;
+		long temp = (long)i;
+		return bitmask & temp; // undo sign extension
+	}
 }

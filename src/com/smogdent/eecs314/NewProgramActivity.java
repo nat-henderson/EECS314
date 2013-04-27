@@ -1,6 +1,14 @@
 package com.smogdent.eecs314;
 
 
+import java.util.LinkedList;
+import java.util.List;
+
+import mips.sim.Instruction;
+import mips.sim.Memory;
+import mips.sim.RegisterFile;
+import mips.sim.Word;
+import mips.sim.instructions.AddInstruction;
 import android.os.Build;
 import android.os.Bundle;
 import android.annotation.TargetApi;
@@ -10,8 +18,10 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -24,12 +34,18 @@ public class NewProgramActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_program);
         
-        //dummy instruction
-        String[] inst = {"addi", "lw"};
+        
+        List<Instruction> instructions = new LinkedList<Instruction>();
+        
+        Memory memory = new Memory();
+        RegisterFile regFile = new RegisterFile();
+        
+        instructions.add(new AddInstruction(memory, regFile, new Word(0)));
+        
+        Instruction[] insArr = (Instruction[]) instructions.toArray(new Instruction[0]);
         
         //TODO: actually fetch instructions that have been added
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, 
-                android.R.layout.simple_list_item_1, inst);
+        ListAdapter adapter = new InstructionObjectArrayAdapter(this, insArr);
         this.setListAdapter(adapter);
         
         //clicky button listener 

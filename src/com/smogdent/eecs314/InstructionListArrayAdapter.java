@@ -7,12 +7,10 @@ public class InstructionListArrayAdapter extends TwoLineArrayAdapter<String> {
     public InstructionListArrayAdapter(Context context,
             int listItemLayoutResourceId, String[] names) {
         super(context, listItemLayoutResourceId, names);
-        // TODO Auto-generated constructor stub
     }
     
     public InstructionListArrayAdapter(Context context, String[] ts) {
         super(context, ts);
-        // TODO Auto-generated constructor stub
     }
 
     @Override

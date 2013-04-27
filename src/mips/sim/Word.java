@@ -12,6 +12,8 @@ public class Word {
 	            (byte)initialValue};
 	}
 	
+	
+	//TODO: Add constructors that take registerids or registerids and literals and make words
 	public Word(float initialValue) {
 		this(Float.floatToRawIntBits(initialValue));		
 	}

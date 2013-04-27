@@ -27,7 +27,40 @@ public abstract class ITypeInstruction extends Instruction {
 		bitmask = 0xFC000000; // mask bits 26-31
 		this.opcode = (instructionWord & bitmask) >> 26;
 		
-		this.inputRegisters.add(new Register(this.registerRs, null));
-		this.outputRegisters.add(new Register(this.registerRt, null));
+		// sign extend the immediate
+		bitmask = 0x8000; // extract bit 15
+		int sign = this.immediate & bitmask;
+		if (sign == 0x800) { // if negative number, extend sign
+			this.immediate |= 0xffff0000;
+		}
+	}
+	
+	protected abstract Word getResult();
+	
+	public int getImmediate(){
+	    return immediate;
+	}
+	
+	@Override
+	public void instructionDecode() {
+		this.inputRegisters.clear();
+		this.inputRegisters.add(this.regFile.getRegister(this.registerRs));
+	}
+	
+	@Override
+	public void doMemory() {
+		// load/store will override
+	}
+	
+	@Override
+	public void writeback() {
+		this.regFile.putRegister(this.registerRt, this.outputRegisters.get(0).getWord());
+	}
+	
+	@Override
+	public void executeInstruction() {
+		this.outputRegisters.clear();
+		Word result = this.getResult();
+		this.outputRegisters.add(new Register(this.registerRt, result));
 	}
 }

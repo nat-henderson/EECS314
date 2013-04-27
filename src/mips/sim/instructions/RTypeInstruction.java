@@ -32,10 +32,6 @@ public abstract class RTypeInstruction extends Instruction {
 		this.registerRs = (instructionWord & bitmask) >> 21;
 		bitmask = 0xFC000000; // mask bits 26-31
 		this.opcode = (instructionWord & bitmask) >> 26;
-		
-		this.inputRegisters.add(new Register(registerRt, null));
-		this.inputRegisters.add(new Register(registerRs, null));
-		this.outputRegisters.add(new Register(registerRd, null));
 	}
 	
 	@Override
@@ -47,7 +43,7 @@ public abstract class RTypeInstruction extends Instruction {
 	
 	@Override
 	public void doMemory() {
-		// nope!
+		// nothing by default
 	}
 	
 	@Override

@@ -48,6 +48,12 @@ public abstract class Instruction extends Word {
 	public abstract void doMemory();
 	
 	public abstract void writeback();
+	
+	/**
+	 * 
+	 * @return the name of the instruction (ADD, ADDI, ect)
+	 */
+	public abstract String getInstructionName();
 
 	public static Instruction fromWord(Memory memory2, RegisterFile regFile2,
 			Word nextInst) {
@@ -58,5 +64,11 @@ public abstract class Instruction extends Word {
 	
 	public String toString() {
 		return "Instruction:  " + this.inputRegisters.toString() + "   " + this.outputRegisters.toString();
+	}
+	
+	protected static long unsignedLongFromInt(int i) {
+		long bitmask = 0x00000000FFFFFFFF;
+		long temp = (long)i;
+		return bitmask & temp; // undo sign extension
 	}
 }

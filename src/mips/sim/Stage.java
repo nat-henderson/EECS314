@@ -99,6 +99,12 @@ public abstract class Stage {
 		this.hasHadInsertThisCycle = true;
 	}
 	
+	public void stall(int numStalls, int whereToStall) {
+		for (int i = 0; i < numStalls; i++) {
+			this.instructions.add(whereToStall, null);
+		}
+	}
+	
 	public void flush() {
 		this.instructions.clear();
 		this.hasHadInsertThisCycle = false;

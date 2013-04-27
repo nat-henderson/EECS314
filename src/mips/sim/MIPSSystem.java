@@ -16,6 +16,7 @@ public class MIPSSystem {
 	private MemoryStage mStage;
 	private WritebackStage wStage;
 	private Map<Integer, Instruction> instrMemory;
+	private Map<StageType, List<StageType>> forwardingMap;
 	
 	public enum StageType {
 		ID, EX, MEM, WB;
@@ -23,6 +24,27 @@ public class MIPSSystem {
 	
 	public MIPSSystem() {
 		this(new ArrayList<Instruction>(), 1,1,1,1);
+	}
+		
+	public MIPSSystem(List<Instruction> initialInstructions, int idSteps, int eSteps,
+			int mSteps, int wbSteps) {
+		this.programCounter = 0x40000000;
+		this.idStage = new InstructionDecodeStage(idSteps);
+		this.eStage = new ExecuteStage(eSteps);
+		this.mStage = new MemoryStage(mSteps);
+		this.wStage = new WritebackStage(wbSteps);
+		this.instrMemory = new HashMap<Integer, Instruction>();
+		int initCounter = programCounter;
+		for (Instruction i : initialInstructions) {
+			instrMemory.put(initCounter, i);
+			initCounter += 4;
+		}
+		this.forwardingMap = new HashMap<StageType, List<StageType>>();
+		this.forwardingMap.put(StageType.ID, new ArrayList<StageType>());
+		this.forwardingMap.put(StageType.EX, new ArrayList<StageType>());
+		this.forwardingMap.put(StageType.MEM, new ArrayList<StageType>());
+		this.forwardingMap.put(StageType.WB, new ArrayList<StageType>());
+		system = this;
 	}
 	
 	public void setupForwarding(StageType forwardFrom, StageType forwardTo) {
@@ -47,22 +69,7 @@ public class MIPSSystem {
 			to = this.wStage;
 		}
 		from.acceptForwardingConfiguration(to);
-	}
-	
-	public MIPSSystem(List<Instruction> initialInstructions, int idSteps, int eSteps,
-			int mSteps, int wbSteps) {
-		this.programCounter = 0x40000000;
-		this.idStage = new InstructionDecodeStage(idSteps);
-		this.eStage = new ExecuteStage(eSteps);
-		this.mStage = new MemoryStage(mSteps);
-		this.wStage = new WritebackStage(wbSteps);
-		this.instrMemory = new HashMap<Integer, Instruction>();
-		int initCounter = programCounter;
-		for (Instruction i : initialInstructions) {
-			instrMemory.put(initCounter, i);
-			initCounter += 4;
-		}
-		system = this;
+		this.forwardingMap.get(forwardFrom).add(forwardTo);
 	}
 	
 	public void run(int steps) {

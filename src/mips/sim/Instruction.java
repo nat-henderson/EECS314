@@ -31,11 +31,11 @@ public abstract class Instruction extends Word {
 
 	public void acceptForwardedRegister(Register r) {
 		Register register = null;
-		for (ListIterator<Register> iterator = this.inputRegisters.listIterator();
-				iterator.hasNext(); register = iterator.next()) {
+		ListIterator<Register> iterator = this.inputRegisters.listIterator();
+		while (iterator.hasNext()){
+			register = iterator.next();
 			if (register != null && register.getId() == r.getId()) {
-				iterator.remove();
-				iterator.add(r);
+				iterator.set(r);
 			}
 		}
 	}

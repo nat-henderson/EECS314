@@ -55,7 +55,11 @@ public class InstructionBuilder {
 		registerMap.put("$ra", 31);
 	}
 	
-	public static Instruction[] buildInstruction(String line) {
+	/*
+	 * parse one line of assembly, returning an array of the corresponding instructions
+	 */
+	public static Instruction[] buildInstruction(String line) 
+			throws UnsupportedInstructionException {
 		if (!built) {
 			buildRegisterMap();
 			initSystems();
@@ -74,18 +78,20 @@ public class InstructionBuilder {
 		case "sw": case "slti": case "sltiu": case "xori":
 			return buildItypeInstruction(line, instruction, s);
 		case "j": case "jal":
-			return buildJtypeInstruction(line, instruction, s);
+			throw new UnsupportedInstructionException();
 		default:
-			return buildExpandedInstruction(line, instruction, s);
+			throw new UnsupportedInstructionException();
 		}
 	}
 	
-	private static Instruction[] buildRtypeInstruction(String line, String instruction, Scanner s) {
+	private static Instruction[] buildRtypeInstruction(String line, String instruction, Scanner s) 
+			throws UnsupportedInstructionException {
 		int opcode = 0x00000000;
 		int registerRd = 0;
 		int registerRs = 0;
 		int registerRt = 0;
 		int shamt = 0;
+		
 		switch(instruction) {
 		case "add": case "addu": case "and": case "or":
 		case "slt": case "sltu": case "sub": case "subu":
@@ -103,8 +109,9 @@ public class InstructionBuilder {
 			registerRs = registerMap.get(s.next().replaceAll(",", ""));
 			break;
 		default:
-			break;
+			throw new UnsupportedInstructionException();
 		}
+		
 		Instruction[] instr = new Instruction[1];
 		int funct = 0;
 		Word w;
@@ -194,9 +201,75 @@ public class InstructionBuilder {
 			instr[0] = new SubtractUnsignedInstruction(memory, regFile, w);
 			break;
 		default:
-			break;
+			throw new UnsupportedInstructionException();
 		}
 		return instr;
 	}
 	
+	private static Instruction[] buildItypeInstruction(String line, String instruction, Scanner s) 
+			throws UnsupportedInstructionException {
+		int immediate;
+		int registerRt;
+		int registerRs;
+		
+		switch(instruction) {
+		case "addi": case "addiu": case "andi": case "ori":
+		case "slti": case "sltiu": case "xori":
+			registerRt = registerMap.get(s.next().replaceAll(",", ""));
+			registerRs = registerMap.get(s.next().replaceAll(",", ""));
+			immediate = s.nextInt();
+			break;
+		case "sw": case "lw":
+			registerRt = registerMap.get(s.next().replaceAll(",", ""));
+			String addr = s.next();
+			int scan;
+			for (scan = 0; addr.charAt(scan) != '(' && scan < addr.length(); scan++);
+			if (scan == 0) {
+				immediate = 0;
+				registerRs = registerMap.get(addr.substring(1, addr.length() - 1));
+			} else {
+				immediate = Integer.parseInt(addr.substring(0, scan));
+				registerRs = registerMap.get(addr.substring(scan + 1, addr.length() - 1));
+			}
+			break;
+		case "bne": case "beq":
+			registerRs = registerMap.get(s.next().replaceAll(",", ""));
+			registerRt = registerMap.get(s.next().replaceAll(",", ""));
+			immediate = s.nextInt(); // assumes direct address, doesn't yet handle labels
+			break;
+		default:
+			throw new UnsupportedInstructionException();
+		}
+		
+		int opcode = 0x00;
+		switch(instruction) {
+			case "addi": opcode = 0x08; break;
+			case "addiu": opcode = 0x09; break;
+			case "andi": opcode = 0x0C; break;
+			case "beq": opcode = 0x04; break;
+			case "bne": opcode = 0x05; break;
+			case "lw": opcode = 0x23; break;
+			case "ori": opcode = 0x0D; break;
+			case "slti": opcode = 0x0A; break;
+			case "sltiu": opcode = 0x0B; break;
+			case "xori": opcode = 0x0E; break;
+		}
+		
+		Word w = new Word(immediate | (registerRt << 16) | (registerRs << 21) | (opcode << 26));
+		Instruction[] instr = new Instruction[1];
+		switch(instruction) {
+		case "addi": instr[0] = new AddImmediateInstruction(memory, regFile, w); break;
+		case "addiu": instr[0] = new AddImmediateUnsignedInstruction(memory, regFile, w); break;
+		case "andi": instr[0] = new AndImmediateInstruction(memory, regFile, w); break;
+		case "beq": instr[0] = new BranchOnEqualInstruction(memory, regFile, w); break;
+		case "bne": instr[0] = new BranchOnNotEqualInstruction(memory, regFile, w); break;
+		case "lw": instr[0] = new LoadWordInstruction(memory, regFile, w); break;
+		case "ori": instr[0] = new OrImmediateInstruction(memory, regFile, w); break;
+		case "slti": instr[0] = new SetLessThanImmediateInstruction(memory, regFile, w); break;
+		case "sltiu": instr[0] = new SetLessThanImmediateUnsignedInstruction(memory, regFile, w); break;
+		case "xori": instr[0] = new XorImmediateInstruction(memory, regFile, w); break;
+		}
+		
+		return instr;
+	}
 }

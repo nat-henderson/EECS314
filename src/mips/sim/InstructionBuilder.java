@@ -8,7 +8,15 @@ import mips.sim.instructions.*;
 
 public class InstructionBuilder {
 	
+	private static boolean built = false;
 	private static Map<String, Integer> registerMap;
+	private static Memory memory;
+	private static RegisterFile regFile;
+	
+	private static void initSystems() {
+		memory = MIPSSystem.getInstance().getMemory();
+		regFile = MIPSSystem.getInstance().getRegFile();
+	}
 	
 	// I love java
 	private static void buildRegisterMap() {
@@ -48,8 +56,10 @@ public class InstructionBuilder {
 	}
 	
 	public static Instruction[] buildInstruction(String line) {
-		if (registerMap == null) {
+		if (!built) {
 			buildRegisterMap();
+			initSystems();
+			built = true;
 		}
 		Scanner s = new Scanner(line);
 		String instruction = s.next();

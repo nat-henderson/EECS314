@@ -1,12 +1,13 @@
 package com.smogdent.eecs314;
 
+import android.annotation.SuppressLint;
 import java.util.HashMap;
 
+@SuppressLint("DefaultLocale")
 public class InstructionWrapper {
 
-    //can't make me spell three syllable words
     //maps instructions to descriptions 
-    private static HashMap<String, String> dMap;
+    private HashMap<String, String> dMap;
     
     public InstructionWrapper(){
         dMap = new HashMap<String, String>();
@@ -40,17 +41,14 @@ public class InstructionWrapper {
         dMap.put("sllv", "Shifts a register value left by the value in a second register and places the result in a third register. Zeroes are shifted in");
         dMap.put("slt", "If $s is less than $t, $d is set to one. It gets zero otherwise");
         dMap.put("slti", "If $s is less than immediate, $t is set to one. It gets zero otherwise");
-        //so booooored
         dMap.put("sltiu", "If $s is less than the unsigned immediate, $t is set to one. It gets zero otherwise");
         dMap.put("sltu", "If $s is less than $t, $d is set to one. It gets zero otherwise");
         dMap.put("sra", "Shifts a register value right by the shift amount (shamt) and places the value in the destination register. The sign bit is shifted in");
         dMap.put("srl", "Shifts a register value right by the shift amount (shamt) and places the value in the destination register. Zeroes are shifted in");
         dMap.put("srlv", "Shifts a register value right by the amount specified in $s and places the value in the destination register. Zeroes are shifted in");
-        //are we even implementing all these?
         dMap.put("sub", "Subtracts two registers and stores the result in a register");
         dMap.put("subu", "Subtracts two registers and stores the result in a register");
         dMap.put("sw", "The contents of $t is stored at the specified address");
-        //FUCKYOU SYSCALL
         dMap.put("xor", "Exclusive ors two registers and stores the result in a register");
         dMap.put("xori", "Bitwise exclusive ors a register and an immediate value and stores the result in a register");
         
@@ -62,7 +60,7 @@ public class InstructionWrapper {
      * @param instruction
      * @return the description of the instruction
      */
-    public static String getDescription(String instruction){
+    public String getDescription(String instruction){
         return dMap.get(instruction.toLowerCase());
     }
     

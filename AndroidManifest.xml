@@ -43,7 +43,7 @@
             android:label="@string/title_activity_new_instruction" >
         </activity>
         <activity
-            android:name="com.smogdent.eecs314.CatagoryListActivity"
+            android:name="com.smogdent.eecs314.CategoryListActivity"
             android:label="@string/title_activity_catagory_list" >
         </activity>
         <activity

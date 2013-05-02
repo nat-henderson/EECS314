@@ -55,7 +55,7 @@ public class NewProgramActivity extends ListActivity {
         OnClickListener listener = new OnClickListener(){
             public void onClick(View view){
                 if (view.getId() == R.id.newInstructionButton){
-                    startActivity(new Intent(getApplicationContext(), CatagoryListActivity.class));
+                    startActivity(new Intent(getApplicationContext(), CategoryListActivity.class));
                 }
             }
         };

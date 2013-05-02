@@ -35,7 +35,12 @@ public class GroupListActivity extends ListActivity {
         }
         
         else if (cat == 2){
-            sets = getResources().getStringArray(R.array.store_sets);
+            sets = getResources().getStringArray(R.array.load_sets);
+            String set = "Load";
+            Intent intent = new Intent(getApplicationContext(), GroupListActivity.class);
+            intent.putExtra("set", set);
+            startActivity(intent);
+
         }
         
         else{
@@ -55,7 +60,7 @@ public class GroupListActivity extends ListActivity {
 
                 // selected item
                 String set = ((TextView) view).getText().toString();
-                Intent intent = new Intent(getApplicationContext(), GroupListActivity.class);
+                Intent intent = new Intent(getApplicationContext(), InstructionListActivity.class);
                 intent.putExtra("set", set);
                 startActivity(intent);
 

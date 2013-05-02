@@ -9,12 +9,20 @@ package com.smogdent.eecs314;
 
 public final class R {
     public static final class array {
-        public static final int add_instructions=0x7f060000;
-        public static final int branch_sets=0x7f060005;
-        public static final int instruction_categories=0x7f060001;
-        public static final int logical_sets=0x7f060003;
-        public static final int mathematical_sets=0x7f060002;
-        public static final int store_sets=0x7f060004;
+        public static final int add_instructions=0x7f060002;
+        public static final int and_instructions=0x7f060007;
+        public static final int branch_instructions=0x7f06000c;
+        public static final int branch_sets=0x7f06000b;
+        public static final int divide_instructions=0x7f060005;
+        public static final int instruction_categories=0x7f060000;
+        public static final int jump_instructions=0x7f06000d;
+        public static final int load_instructions=0x7f06000a;
+        public static final int load_sets=0x7f060009;
+        public static final int logical_sets=0x7f060006;
+        public static final int mathematical_sets=0x7f060001;
+        public static final int multiply_instructions=0x7f060004;
+        public static final int shift_instructions=0x7f060008;
+        public static final int subtract_instructions=0x7f060003;
     }
     public static final class attr {
     }

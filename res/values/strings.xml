@@ -8,13 +8,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="load_file">Load File</string>
     <string name="new_file">New MIPS Program</string>
-
-    <string-array name="add_instructions">
-        <item>ADD</item>
-        <item>ADDI</item>
-        <item>ADDU</item>
-        <item>ADDIU</item>
-    </string-array>
+    
     <string-array name="instruction_categories">
         <item>Mathematical Operations</item>
         <item>Logical Operations</item>
@@ -27,18 +21,80 @@
         <item>Multiply</item>
         <item>Divide</item>
     </string-array>
+    <string-array name="add_instructions">
+        <item>ADD</item>
+        <item>ADDI</item>
+        <item>ADDU</item>
+        <item>ADDIU</item>
+    </string-array>
+    <string-array name="subtract_instructions">
+        <item>SUB</item>
+        <item>SUBU</item>
+    </string-array>
+    <string-array name="multiply_instructions">
+        <item>MULT</item>
+        <item>MULTU</item>
+        <item>MFLO</item>
+        <item>MFHI</item>
+    </string-array>
+    <string-array name="divide_instructions">
+        <item>DIV</item>
+        <item>DIVU</item>
+        <item>MFLO</item>
+        <item>MFHI</item>
+    </string-array>
+    
     <string-array name="logical_sets">
-        <item>And</item>
-        <item>Or</item>
-        <item>Xor</item>
+        <item>And/Or/Xor</item>
         <item>Shift</item>
     </string-array>
-    <string-array name="store_sets">
+    <string-array name="and_instructions">
+        <item>AND</item>
+        <item>ANDI</item>
+        <item>OR</item>
+        <item>ORI</item>
+        <item>XOR</item>
+        <item>XORI</item>
+    </string-array>
+    <string-array name="shift_instructions">
+        <item>SLL</item>
+        <item>SLLV</item>
+        <item>SRA</item>
+        <item>SRL</item>
+        <item>SRLV</item>
+    </string-array>
+    
+    <string-array name="load_sets">
         <item>Load</item>
         <item>Store</item>
     </string-array>
+    <string-array name="load_instructions">
+        <item>LB</item>
+        <item>LUI</item>
+        <item>LW</item>
+        <item>MFLO</item>
+        <item>MFHI</item>
+        <item>SW</item>
+    </string-array>
+    
     <string-array name="branch_sets">
         <item>Branch</item>
+        <item>Jump</item>
+    </string-array>
+    <string-array name="branch_instructions">
+        <item>BEQ</item>
+        <item>BNE</item>
+        <item>BGEZ</item>
+        <item>BGTZ</item>
+        <item>BLEZ</item>
+        <item>BLTZ</item>
+        <item>BGEZAL</item>
+        <item>BLTZAL</item>
+    </string-array>
+    <string-array name="jump_instructions">
+        <item>J</item>
+        <item>JAL</item>
+        <item>JR</item>
     </string-array>
     	
     <string name="title_activity_new_instruction">NewInstructionActivity</string>

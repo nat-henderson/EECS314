@@ -1,6 +1,7 @@
 package com.smogdent.eecs314;
 
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class NewProgramActivity extends ListActivity {
         OnClickListener listener = new OnClickListener(){
             public void onClick(View view){
                 if (view.getId() == R.id.newInstructionButton){
-                    startActivity(new Intent(getApplicationContext(), CatagoryListActivity.class));
+                    startActivity(new Intent(getApplicationContext(), CategoryListActivity.class));
                 }
             }
         };
@@ -67,9 +68,9 @@ public class NewProgramActivity extends ListActivity {
                 // selected item
                 String instruction = ((TextView) view).getText().toString();
                 // bundling level, instruction
-                Bundle bundle = new Bundle();
-                bundle.putString("instruction", instruction);
-                startActivity(new Intent(getApplicationContext(), ItemDetailActivity.class),bundle);
+                Intent intent = new Intent(getApplicationContext(), ItemDetailActivity.class);
+                //intent.putExtra("insruction", (Serializable)insArr[position]);
+                startActivity(intent);
             }
         };
         

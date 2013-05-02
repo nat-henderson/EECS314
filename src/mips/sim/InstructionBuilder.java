@@ -55,7 +55,7 @@ public class InstructionBuilder {
 		registerMap.put("$ra", 31);
 	}
 	
-	/*
+	/**
 	 * parse one line of assembly, returning an array of the corresponding instructions
 	 */
 	public static Instruction[] buildInstruction(String line) 

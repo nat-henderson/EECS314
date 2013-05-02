@@ -9,10 +9,12 @@ package com.smogdent.eecs314;
 
 public final class R {
     public static final class array {
-        public static final int add_instruction_descripton=0x7f060001;
         public static final int add_instructions=0x7f060000;
-        public static final int instruction_categories=0x7f060002;
-        public static final int mathematical_sets=0x7f060003;
+        public static final int branch_sets=0x7f060005;
+        public static final int instruction_categories=0x7f060001;
+        public static final int logical_sets=0x7f060003;
+        public static final int mathematical_sets=0x7f060002;
+        public static final int store_sets=0x7f060004;
     }
     public static final class attr {
     }
@@ -30,22 +32,24 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f090009;
-        public static final int goButton=0x7f090006;
-        public static final int item_detail=0x7f090008;
-        public static final int item_detail_container=0x7f090001;
-        public static final int item_list=0x7f090002;
-        public static final int list=0x7f090000;
-        public static final int loadButton=0x7f090003;
-        public static final int newButton=0x7f090004;
-        public static final int newInstructionButton=0x7f090007;
-        public static final int newinstlayout=0x7f090005;
+        public static final int action_settings=0x7f09000a;
+        public static final int goButton=0x7f090007;
+        public static final int gridLayout1=0x7f090000;
+        public static final int item_detail=0x7f090009;
+        public static final int item_detail_container=0x7f090002;
+        public static final int item_list=0x7f090003;
+        public static final int list=0x7f090001;
+        public static final int loadButton=0x7f090004;
+        public static final int newButton=0x7f090005;
+        public static final int newInstructionButton=0x7f090008;
+        public static final int newinstlayout=0x7f090006;
     }
     public static final class layout {
         public static final int activity_catagory_list=0x7f030000;
         public static final int activity_group_list=0x7f030001;
-        public static final int activity_instruction_list=0x7f030002;
-        public static final int activity_item_detail=0x7f030003;
+        public static final int activity_instruction_detail=0x7f030002;
+        public static final int activity_instruction_list=0x7f030003;
+        public static final int activity_item_detail=0x7f030004;
         /** 
     Layout alias to replace the single-pane version of the layout with a
     two-pane version on Large screens.
@@ -61,16 +65,17 @@ public final class R {
     http://developer.android.com/training/multiscreen/screensizes.html#TaskUseAliasFilters
     
          */
-        public static final int activity_item_list=0x7f030004;
-        public static final int activity_item_twopane=0x7f030005;
-        public static final int activity_main=0x7f030006;
-        public static final int activity_new_program=0x7f030007;
-        public static final int fragment_item_detail=0x7f030008;
+        public static final int activity_item_list=0x7f030005;
+        public static final int activity_item_twopane=0x7f030006;
+        public static final int activity_main=0x7f030007;
+        public static final int activity_new_program=0x7f030008;
+        public static final int fragment_item_detail=0x7f030009;
     }
     public static final class menu {
         public static final int catagory_list=0x7f080000;
-        public static final int main=0x7f080001;
-        public static final int new_instruction=0x7f080002;
+        public static final int created_instruction_detail=0x7f080001;
+        public static final int main=0x7f080002;
+        public static final int new_instruction=0x7f080003;
     }
     public static final class string {
         public static final int action_settings=0x7f050003;
@@ -81,6 +86,7 @@ public final class R {
         public static final int new_file=0x7f050006;
         public static final int new_instruction=0x7f050008;
         public static final int title_activity_catagory_list=0x7f05000a;
+        public static final int title_activity_created_instruction_detail=0x7f05000c;
         public static final int title_activity_group_list=0x7f05000b;
         public static final int title_activity_main=0x7f050002;
         public static final int title_activity_new_instruction=0x7f050007;

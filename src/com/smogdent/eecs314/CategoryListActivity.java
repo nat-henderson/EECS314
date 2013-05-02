@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-public class CatagoryListActivity extends ListActivity {
+public class CategoryListActivity extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +31,9 @@ public class CatagoryListActivity extends ListActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                     int position, long id) {
 
-                // selected item
-                String category = ((TextView) view).getText().toString();
-                // bundling level, instruction
-                Bundle bundle = new Bundle();
-                bundle.putString("category", category);
-                startActivity(new Intent(getApplicationContext(), GroupListActivity.class),bundle);
+                Intent intent = new Intent(getApplicationContext(), GroupListActivity.class);
+                intent.putExtra("category", position);
+                startActivity(intent);
             }
         };
         

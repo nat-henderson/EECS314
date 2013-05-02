@@ -8,7 +8,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="load_file">Load File</string>
     <string name="new_file">New MIPS Program</string>
-    
+
     <string-array name="instruction_categories">
         <item>Mathematical Operations</item>
         <item>Logical Operations</item>
@@ -43,7 +43,6 @@
         <item>MFLO</item>
         <item>MFHI</item>
     </string-array>
-    
     <string-array name="logical_sets">
         <item>And/Or/Xor</item>
         <item>Shift</item>
@@ -63,7 +62,6 @@
         <item>SRL</item>
         <item>SRLV</item>
     </string-array>
-    
     <string-array name="load_sets">
         <item>Load</item>
         <item>Store</item>
@@ -76,7 +74,6 @@
         <item>MFHI</item>
         <item>SW</item>
     </string-array>
-    
     <string-array name="branch_sets">
         <item>Branch</item>
         <item>Jump</item>
@@ -96,12 +93,48 @@
         <item>JAL</item>
         <item>JR</item>
     </string-array>
-    	
+
+    <string-array name="registers">
+        <item>$zero</item>
+		<item>$at</item>
+		<item>$v0</item>
+		<item>$v1</item>
+		<item>$a0</item>
+		<item>$a1</item>
+		<item>$a2</item>
+		<item>$a3</item>
+		<item>$t0</item>
+		<item>$t1</item>
+		<item>$t2</item>
+		<item>$t3</item>
+		<item>$t4</item>
+		<item>$t5</item>
+		<item>$t6</item>
+		<item>$t7</item>
+		<item>$s0</item>
+		<item>$s1</item>
+		<item>$s2</item>
+		<item>$s3</item>
+		<item>$s4</item>
+		<item>$s5</item>
+		<item>$s6</item>
+		<item>$s7</item>
+		<item>$t8</item>
+		<item>$t9</item>
+		<item>$k0</item>
+		<item>$k1</item>
+		<item>$gp</item>
+		<item>$sp</item>
+		<item>$fp</item>
+		<item>$ra</item>
+    </string-array>
+    
     <string name="title_activity_new_instruction">NewInstructionActivity</string>
     <string name="new_instruction">New Instruction</string>
     <string name="emulate_mips">Go!</string>
     <string name="title_activity_catagory_list">CatagoryListActivity</string>
     <string name="title_activity_group_list">GroupListActivity</string>
     <string name="title_activity_created_instruction_detail">CreatedInstructionDetail</string>
+    <string name="title_activity_create_instruction">CreateInstructionActivity</string>
 
 </resources>

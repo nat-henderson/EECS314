@@ -54,6 +54,10 @@
             android:name="com.smogdent.eecs314.InstructionDetail"
             android:label="@string/title_activity_created_instruction_detail" >
         </activity>
+        <activity
+            android:name="com.smogdent.eecs314.CreateInstructionActivity"
+            android:label="@string/title_activity_create_instruction" >
+        </activity>
     </application>
 
 </manifest>

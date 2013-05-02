@@ -72,7 +72,7 @@ public class InstructionListActivity extends ListActivity {
                 // bundling level, instruction
                 Bundle bundle = new Bundle();
                 bundle.putString("instruction", instruction);
-                startActivity(new Intent(getApplicationContext(), ItemDetailActivity.class),bundle);
+                startActivity(new Intent(getApplicationContext(), CreateInstructionActivity.class),bundle);
 
             }
         });

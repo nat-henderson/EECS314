@@ -37,7 +37,7 @@ public class GroupListActivity extends ListActivity {
         else if (cat == 2){
             sets = getResources().getStringArray(R.array.load_sets);
             String set = "Load";
-            Intent intent = new Intent(getApplicationContext(), GroupListActivity.class);
+            Intent intent = new Intent(getApplicationContext(), InstructionListActivity.class);
             intent.putExtra("set", set);
             startActivity(intent);
 

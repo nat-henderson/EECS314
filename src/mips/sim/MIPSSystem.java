@@ -20,6 +20,22 @@ public class MIPSSystem {
 	private Map<Integer, Instruction> instrMemory;
 	private Map<StageType, List<StageType>> forwardingMap;
 	private List<Instruction> stallsQueued = new LinkedList<Instruction>();
+	private Memory memory;
+	private RegisterFile registers;
+	
+	public static MIPSSystem getInstance() {
+		if (system == null)
+			system = new MIPSSystem();
+		return system;
+	}
+	
+	public Memory getMemory() {
+		return memory;
+	}
+	
+	public RegisterFile getRegFile() {
+		return registers;
+	}
 	
 	public enum StageType {
 		ID, EX, MEM, WB;

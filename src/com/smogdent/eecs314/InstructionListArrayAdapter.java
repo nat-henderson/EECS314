@@ -4,28 +4,27 @@ import android.content.Context;
 
 public class InstructionListArrayAdapter extends TwoLineArrayAdapter<String> {
 
+    InstructionWrapper iw;
+    
     public InstructionListArrayAdapter(Context context,
             int listItemLayoutResourceId, String[] names) {
         super(context, listItemLayoutResourceId, names);
+        iw = new InstructionWrapper();
     }
     
     public InstructionListArrayAdapter(Context context, String[] ts) {
         super(context, ts);
+        iw = new InstructionWrapper();
     }
 
     @Override
     public String lineOneText(String t) {
-        //shutup it's easier this way
-        return t.split(":")[0];
-    }
+        return t;
+        }
 
     @Override
     public String lineTwoText(String t) {
-        String[] strings = t.split(":");
-        if (strings.length > 1){
-            return strings[1];
-        }
-        else return null;
+        return iw.getDescription(t);
     }
 
 }

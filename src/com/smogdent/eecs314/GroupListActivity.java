@@ -19,7 +19,36 @@ public class GroupListActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catagory_list);
       
-        String[] sets = getResources().getStringArray(R.array.mathematical_sets);
+        Bundle extras = getIntent().getExtras();
+        //relies on clicked list position to do the right thing which is sub-par.
+        int cat = 0;
+        if (extras.containsKey("category")){
+            cat = extras.getInt("category");
+        } 
+        
+        String[] sets;
+        if (cat == 0){
+            sets = getResources().getStringArray(R.array.mathematical_sets);
+        }
+        else if (cat == 1){
+            sets = getResources().getStringArray(R.array.logical_sets);
+        }
+        
+        else if (cat == 2){
+            sets = getResources().getStringArray(R.array.load_sets);
+            String set = "Load";
+            Intent intent = new Intent(getApplicationContext(), GroupListActivity.class);
+            intent.putExtra("set", set);
+            startActivity(intent);
+
+        }
+        
+        else{
+            sets = getResources().getStringArray(R.array.branch_sets);
+        }
+        
+        
+        
 
         this.setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, sets));
 
@@ -31,14 +60,9 @@ public class GroupListActivity extends ListActivity {
 
                 // selected item
                 String set = ((TextView) view).getText().toString();
-
-                // bundling level, instruction
-
-                Bundle bundle = new Bundle();
-
-                bundle.putString("set", set);
-
-                startActivity(new Intent(getApplicationContext(), InstructionListActivity.class),bundle);
+                Intent intent = new Intent(getApplicationContext(), InstructionListActivity.class);
+                intent.putExtra("set", set);
+                startActivity(intent);
 
             }
         });

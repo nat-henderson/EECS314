@@ -67,22 +67,32 @@ public class InstructionBuilder {
 		}
 		Scanner s = new Scanner(line);
 		String instruction = s.next();
-		switch(instruction.toLowerCase()) {
-		case "add": case "addu": case "and": case "jr":
-		case "or": case "sll": case "slt": case "sltu":
-		case "sra": case "srl": case "sub": case "subu":
-		case "xor": case "nor":
+		String lowerCaseInstruction = instruction.toLowerCase();
+		if(lowerCaseInstruction == "add" || lowerCaseInstruction == "addu"
+				|| lowerCaseInstruction == "and" || lowerCaseInstruction == "jr"
+				|| lowerCaseInstruction == "or" || lowerCaseInstruction == "sll"
+				|| lowerCaseInstruction == "slt" || lowerCaseInstruction == "sltu"
+				|| lowerCaseInstruction == "sra" || lowerCaseInstruction == "srl"
+				|| lowerCaseInstruction == "sub" || lowerCaseInstruction == "subu"
+				|| lowerCaseInstruction == "xor" || lowerCaseInstruction == "nor") {
 			return buildRtypeInstruction(line, instruction, s);
-		case "addi": case "addiu": case "andi": case "beq":
-		case "bne": case "lui": case "lw": case "ori":
-		case "sw": case "slti": case "sltiu": case "xori":
+		}
+		else if(lowerCaseInstruction == "addi" || lowerCaseInstruction == "addiu"
+				|| lowerCaseInstruction == "andi" || lowerCaseInstruction == "beq"
+				|| lowerCaseInstruction == "bne" || lowerCaseInstruction == "lui"
+				|| lowerCaseInstruction == "lw" || lowerCaseInstruction == "ori"
+				|| lowerCaseInstruction == "sw"|| lowerCaseInstruction == "slti" 
+				|| lowerCaseInstruction == "sltiu" || lowerCaseInstruction == "xori") {
 			return buildItypeInstruction(line, instruction, s);
-		case "j": case "jal":
+		}
+		else if(lowerCaseInstruction == "j" || lowerCaseInstruction == "jal") {
 			throw new UnsupportedInstructionException();
-		default:
+		}
+		else{
 			throw new UnsupportedInstructionException();
 		}
 	}
+		
 	
 	private static Instruction[] buildRtypeInstruction(String line, String instruction, Scanner s) 
 			throws UnsupportedInstructionException {
@@ -92,115 +102,117 @@ public class InstructionBuilder {
 		int registerRt = 0;
 		int shamt = 0;
 		
-		switch(instruction) {
-		case "add": case "addu": case "and": case "or":
-		case "slt": case "sltu": case "sub": case "subu":
-		case "xor": case "nor":
+		String lowerCaseInstruction = instruction.toLowerCase();
+		if(lowerCaseInstruction == "add" || lowerCaseInstruction == "addu"
+				|| lowerCaseInstruction == "and" || lowerCaseInstruction == "or"
+				|| lowerCaseInstruction == "slt" || lowerCaseInstruction == "sltu"
+				|| lowerCaseInstruction == "sub" || lowerCaseInstruction == "subu"
+				|| lowerCaseInstruction == "xor" || lowerCaseInstruction == "nor") {
 			registerRd = registerMap.get(s.next().replaceAll(",", ""));
 			registerRs = registerMap.get(s.next().replaceAll(",", ""));
 			registerRt = registerMap.get(s.next().replaceAll(",", ""));
-			break;
-		case "sll": case "sra": case "srl":
+		}
+		else if(lowerCaseInstruction == "sll" || lowerCaseInstruction == "sra"
+				|| lowerCaseInstruction == "srl") {
 			registerRd = registerMap.get(s.next().replaceAll(",", ""));
 			registerRt = registerMap.get(s.next().replaceAll(",", ""));
 			shamt = s.nextInt();
-			break;
-		case "jr":
+		}
+		else if(lowerCaseInstruction == "jr") {
 			registerRs = registerMap.get(s.next().replaceAll(",", ""));
-			break;
-		default:
+		}
+		else{
 			throw new UnsupportedInstructionException();
 		}
 		
 		Instruction[] instr = new Instruction[1];
 		int funct = 0;
 		Word w;
-		switch(instruction) {
-		case "add":
+		if(lowerCaseInstruction == "add") {
 			funct = 0x20;
 			w = new Word(funct | (shamt << 6) | (registerRd << 11) | (registerRt << 16) |
 					(registerRs << 21) | (opcode << 26));
 			instr[0] = new AddInstruction(memory, regFile, w);
-			break;
-		case "addu":
+		}
+		else if(lowerCaseInstruction == "addu") {
 			funct = 0x21;
 			w = new Word(funct | (shamt << 6) | (registerRd << 11) | (registerRt << 16) |
 					(registerRs << 21) | (opcode << 26));
 			instr[0] = new AddUnsignedInstruction(memory, regFile, w);
-			break;
-		case "and":
+		}
+		else if(lowerCaseInstruction == "and") {
 			funct = 0x24;
 			w = new Word(funct | (shamt << 6) | (registerRd << 11) | (registerRt << 16) |
 					(registerRs << 21) | (opcode << 26));
 			instr[0] = new AndInstruction(memory, regFile, w);
-			break;
-		case "jr":
+		}
+		else if(lowerCaseInstruction == "jr") {
 			funct = 0x08;
 			w = new Word(funct | (shamt << 6) | (registerRd << 11) | (registerRt << 16) |
 					(registerRs << 21) | (opcode << 26));
 			instr[0] = new JumpRegisterInstruction(memory, regFile, w);
-			break;
-		case "nor":
+		}
+		else if(lowerCaseInstruction == "nor") {
 			funct = 0x27;
 			w = new Word(funct | (shamt << 6) | (registerRd << 11) | (registerRt << 16) |
 					(registerRs << 21) | (opcode << 26));
 			instr[0] = new NorInstruction(memory, regFile, w);
-			break;
-		case "xor":
+		}
+		else if(lowerCaseInstruction == "xor") {
 			funct = 0x26;
 			w = new Word(funct | (shamt << 6) | (registerRd << 11) | (registerRt << 16) |
 					(registerRs << 21) | (opcode << 26));
 			instr[0] = new XorInstruction(memory, regFile, w);
-			break;
-		case "or":
+		}
+		else if(lowerCaseInstruction == "or") {
 			funct = 0x25;
 			w = new Word(funct | (shamt << 6) | (registerRd << 11) | (registerRt << 16) |
 					(registerRs << 21) | (opcode << 26));
 			instr[0] = new OrInstruction(memory, regFile, w);
-			break;
-		case "slt":
+		}
+		else if(lowerCaseInstruction == "slt") {
 			funct = 0x2A;
 			w = new Word(funct | (shamt << 6) | (registerRd << 11) | (registerRt << 16) |
 					(registerRs << 21) | (opcode << 26));
 			instr[0] = new SetLessThanInstruction(memory, regFile, w);
-			break;
-		case "sltu":
+		}
+		else if(lowerCaseInstruction == "sltu") {
 			funct = 0x2B;
 			w = new Word(funct | (shamt << 6) | (registerRd << 11) | (registerRt << 16) |
 					(registerRs << 21) | (opcode << 26));
 			instr[0] = new SetLessThanUnsignedInstruction(memory, regFile, w);
-			break;
-		case "sll":
+		}
+		else if(lowerCaseInstruction == "sll") {
 			funct = 0x00;
 			w = new Word(funct | (shamt << 6) | (registerRd << 11) | (registerRt << 16) |
 					(registerRs << 21) | (opcode << 26));
 			instr[0] = new ShiftLeftLogicalInstruction(memory, regFile, w);
-			break;
-		case "srl":
+		}
+		else if(lowerCaseInstruction == "srl") {
 			funct = 0x02;
 			w = new Word(funct | (shamt << 6) | (registerRd << 11) | (registerRt << 16) |
 					(registerRs << 21) | (opcode << 26));
 			instr[0] = new ShiftRightLogicalInstruction(memory, regFile, w);
-			break;
-		case "sra":
+		}
+		else if(lowerCaseInstruction == "sra") {
 			funct = 0x03;
 			w = new Word(funct | (shamt << 6) | (registerRd << 11) | (registerRt << 16) |
 					(registerRs << 21) | (opcode << 26));
 			instr[0] = new ShiftRightArithmeticInstruction(memory, regFile, w);
-			break;
-		case "sub":
+		}
+		else if(lowerCaseInstruction == "sub") {
 			funct = 0x22;
 			w = new Word(funct | (shamt << 6) | (registerRd << 11) | (registerRt << 16) |
 					(registerRs << 21) | (opcode << 26));
 			instr[0] = new SubtractInstruction(memory, regFile, w);
-			break;
-		case "subu":
+		}
+		else if(lowerCaseInstruction == "subu") {
 			funct = 0x23;
 			w = new Word(funct | (shamt << 6) | (registerRd << 11) | (registerRt << 16) |
 					(registerRs << 21) | (opcode << 26));
 			instr[0] = new SubtractUnsignedInstruction(memory, regFile, w);
-			break;
-		default:
+		}
+		else{
 			throw new UnsupportedInstructionException();
 		}
 		return instr;
@@ -212,14 +224,16 @@ public class InstructionBuilder {
 		int registerRt;
 		int registerRs;
 		
-		switch(instruction) {
-		case "addi": case "addiu": case "andi": case "ori":
-		case "slti": case "sltiu": case "xori":
+		String lowerCaseInstruction = instruction.toLowerCase();
+		if(lowerCaseInstruction == "addi" || lowerCaseInstruction == "addiu"
+				|| lowerCaseInstruction == "andi" || lowerCaseInstruction == "ori"
+				|| lowerCaseInstruction == "slti" || lowerCaseInstruction == "sltiu"
+				|| lowerCaseInstruction == "xori") {
 			registerRt = registerMap.get(s.next().replaceAll(",", ""));
 			registerRs = registerMap.get(s.next().replaceAll(",", ""));
 			immediate = s.nextInt();
-			break;
-		case "sw": case "lw":
+		}
+		else if(lowerCaseInstruction == "sw" || lowerCaseInstruction == "lw") {
 			registerRt = registerMap.get(s.next().replaceAll(",", ""));
 			String addr = s.next();
 			int scan;
@@ -231,43 +245,81 @@ public class InstructionBuilder {
 				immediate = Integer.parseInt(addr.substring(0, scan));
 				registerRs = registerMap.get(addr.substring(scan + 1, addr.length() - 1));
 			}
-			break;
-		case "bne": case "beq":
+		}
+		else if(lowerCaseInstruction == "bne" || lowerCaseInstruction == "beq") {
 			registerRs = registerMap.get(s.next().replaceAll(",", ""));
 			registerRt = registerMap.get(s.next().replaceAll(",", ""));
 			immediate = s.nextInt(); // assumes direct address, doesn't yet handle labels
-			break;
-		default:
+		}
+		else{
 			throw new UnsupportedInstructionException();
 		}
 		
 		int opcode = 0x00;
-		switch(instruction) {
-			case "addi": opcode = 0x08; break;
-			case "addiu": opcode = 0x09; break;
-			case "andi": opcode = 0x0C; break;
-			case "beq": opcode = 0x04; break;
-			case "bne": opcode = 0x05; break;
-			case "lw": opcode = 0x23; break;
-			case "ori": opcode = 0x0D; break;
-			case "slti": opcode = 0x0A; break;
-			case "sltiu": opcode = 0x0B; break;
-			case "xori": opcode = 0x0E; break;
+		if(lowerCaseInstruction == "addi") {
+			opcode = 0x08;
 		}
+		else if(lowerCaseInstruction == "addiu") {
+			opcode = 0x09;
+		}
+		else if(lowerCaseInstruction == "andi") {
+			opcode = 0x0C;
+		}
+		else if(lowerCaseInstruction == "beq") {
+			opcode = 0x04;
+		}
+		else if(lowerCaseInstruction == "bne") {
+			opcode = 0x05;
+		}
+		else if(lowerCaseInstruction == "lw") {
+			opcode = 0x23;
+		}
+		else if(lowerCaseInstruction == "ori") {
+			opcode = 0x0D;
+		}
+		else if(lowerCaseInstruction == "slti") {
+			opcode = 0x0A;
+		}
+		else if(lowerCaseInstruction == "sltiu") {
+			opcode = 0x0B;
+		}
+		else if(lowerCaseInstruction == "xori") {
+			opcode = 0x0E;
+		}
+
 		
 		Word w = new Word(immediate | (registerRt << 16) | (registerRs << 21) | (opcode << 26));
 		Instruction[] instr = new Instruction[1];
-		switch(instruction) {
-		case "addi": instr[0] = new AddImmediateInstruction(memory, regFile, w); break;
-		case "addiu": instr[0] = new AddImmediateUnsignedInstruction(memory, regFile, w); break;
-		case "andi": instr[0] = new AndImmediateInstruction(memory, regFile, w); break;
-		case "beq": instr[0] = new BranchOnEqualInstruction(memory, regFile, w); break;
-		case "bne": instr[0] = new BranchOnNotEqualInstruction(memory, regFile, w); break;
-		case "lw": instr[0] = new LoadWordInstruction(memory, regFile, w); break;
-		case "ori": instr[0] = new OrImmediateInstruction(memory, regFile, w); break;
-		case "slti": instr[0] = new SetLessThanImmediateInstruction(memory, regFile, w); break;
-		case "sltiu": instr[0] = new SetLessThanImmediateUnsignedInstruction(memory, regFile, w); break;
-		case "xori": instr[0] = new XorImmediateInstruction(memory, regFile, w); break;
+		
+		if(lowerCaseInstruction == "addi") {
+			instr[0] = new AddImmediateInstruction(memory, regFile, w);
+		}
+		else if(lowerCaseInstruction == "addiu") {
+			instr[0] = new AddImmediateUnsignedInstruction(memory, regFile, w);
+		}
+		else if(lowerCaseInstruction == "andi") {
+			instr[0] = new AndImmediateInstruction(memory, regFile, w);
+		}
+		else if(lowerCaseInstruction == "beq") {
+			instr[0] = new BranchOnEqualInstruction(memory, regFile, w);
+		}
+		else if(lowerCaseInstruction == "bne") {
+			instr[0] = new BranchOnNotEqualInstruction(memory, regFile, w);
+		}
+		else if(lowerCaseInstruction == "lw") {
+			instr[0] = new LoadWordInstruction(memory, regFile, w);
+		}
+		else if(lowerCaseInstruction == "ori") {
+			instr[0] = new OrImmediateInstruction(memory, regFile, w);
+		}
+		else if(lowerCaseInstruction == "slti") {
+			instr[0] = new SetLessThanImmediateInstruction(memory, regFile, w);
+		}
+		else if(lowerCaseInstruction == "sltiu") {
+			instr[0] = new SetLessThanImmediateUnsignedInstruction(memory, regFile, w);
+		}
+		else if(lowerCaseInstruction == "xori") {
+			instr[0] = new XorImmediateInstruction(memory, regFile, w);
 		}
 		
 		return instr;

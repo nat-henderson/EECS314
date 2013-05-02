@@ -32,6 +32,10 @@ public abstract class RTypeInstruction extends Instruction {
 		this.registerRs = (instructionWord & bitmask) >> 21;
 		bitmask = 0xFC000000; // mask bits 26-31
 		this.opcode = (instructionWord & bitmask) >> 26;
+		
+		this.inputRegisters.add(new Register(this.registerRt, null));
+		this.inputRegisters.add(new Register(this.registerRs, null));
+		this.outputRegisters.add(new Register(this.registerRd, null));
 	}
 	
 	@Override

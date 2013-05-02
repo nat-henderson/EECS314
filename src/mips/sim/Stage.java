@@ -37,9 +37,6 @@ public abstract class Stage {
 			}
 		}
 		this.hasHadInsertThisCycle = false;
-		if (this.instructions.size() < this.numberOfCycles) {
-			return null;
-		}
 		Instruction inst = this.instructions.remove(this.numberOfCycles);
 		if (inst == null) {
 			return inst;
@@ -52,7 +49,7 @@ public abstract class Stage {
 		}
 		return inst;
 	}
-	
+		
 	protected void acceptForwardedRegister(Register forward) {
 		// before a value is computed, the word is null.
 		if (forward.getWord() == null) {
@@ -62,24 +59,10 @@ public abstract class Stage {
 		if (this.instructions.size() > 0 && this.instructions.get(0) != null) {
 			this.instructions.get(0).acceptForwardedRegister(forward);
 		}
-		// loop runs backwards because we alter the size but still only need to keep moving forward
-		for (int i = this.instructions.size(); i > 1 ; i--) {
-			int stalls = 0;
-			boolean needsForwarding = false;
-			for (Register r : this.instructions.get(i).inputRegisters) {
-				if (r.getId() == forward.getId()) {
-					needsForwarding = true;
-				}
-			}
-			if (needsForwarding) {
-				// we need to add stalls equal to the difference between the current
-				// location and the start of the stage.
-				while (stalls < i) {
-					this.instructions.add(i + 1, null);
-					stalls ++;
-				}
-			}
-		}
+	}
+	
+	public int size() {
+		return this.numberOfCycles;
 	}
 
 	public Instruction getCurrentInstruction(int idx) {
@@ -97,12 +80,6 @@ public abstract class Stage {
 		}
 		this.instructions.add(0, i);
 		this.hasHadInsertThisCycle = true;
-	}
-	
-	public void stall(int numStalls, int whereToStall) {
-		for (int i = 0; i < numStalls; i++) {
-			this.instructions.add(whereToStall, null);
-		}
 	}
 	
 	public void flush() {

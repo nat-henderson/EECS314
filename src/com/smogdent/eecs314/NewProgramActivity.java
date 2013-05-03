@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 import mips.sim.Instruction;
+import mips.sim.MIPSSystem;
 import mips.sim.Memory;
 import mips.sim.RegisterFile;
 import mips.sim.UnsupportedInstructionException;
@@ -41,6 +42,13 @@ public class NewProgramActivity extends ListActivity {
     
     List<Instruction> instructions = new ArrayList<Instruction>();
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+    	for (int i = 0; i < instructions.size(); i++) {
+    		Log.d("INFO", "serializing " + instructions.get(i).toString());
+        	outState.putSerializable("instruction" + i, instructions.get(i));    		
+    	}
+    }
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +56,7 @@ public class NewProgramActivity extends ListActivity {
         setContentView(R.layout.activity_new_program);
         Bundle extras = getIntent().getExtras();
         String whatIsThisFile = extras.getString("chosenfile");
-        if(!whatIsThisFile.equals("NEW_FILE")) {
+        if(whatIsThisFile != null && !whatIsThisFile.equals("NEW_FILE")) {
         	//it's a saved file, have to actually load it
         	try{
         		FileInputStream fis = openFileInput(whatIsThisFile);
@@ -81,7 +89,12 @@ public class NewProgramActivity extends ListActivity {
             Memory memory = new Memory();
             RegisterFile regFile = new RegisterFile();
         
-        instructions.add(new AddInstruction(memory, regFile, new Word(0)));
+        if (savedInstanceState == null || savedInstanceState.getSerializable("instruction0") == null) {
+        	instructions.add(new AddInstruction(memory, regFile, new Word(0)));
+        }
+        else {
+        	Log.d("INFO", "tried to get objects like you wanted!");
+        }
         
         Instruction[] insArr = (Instruction[]) instructions.toArray(new Instruction[0]);
         
@@ -124,7 +137,8 @@ public class NewProgramActivity extends ListActivity {
                 }
                 
                 else if (view.getId() == R.id.goButton){
-                    //TODO: GO!
+                	MIPSSystem system = new MIPSSystem(instructions, 1,1,1,1);
+                	// do stuff
                 }
             }
         };
@@ -180,9 +194,14 @@ public class NewProgramActivity extends ListActivity {
                 Set<String> keys = iBundle.keySet();
                 Log.d("INFO", "got key set sized " + keys.size());
                 for (String s : keys){
-                    instructions.add((Instruction)extras.getSerializable(s));
+                    instructions.add((Instruction)iBundle.getSerializable(s));
+                    Log.d("INFO", "got instruction: " + s + " to " + iBundle.getSerializable(s));
                 }
             }
         }
+        Instruction[] insArr = (Instruction[]) instructions.toArray(new Instruction[0]);
+        
+        ListAdapter adapter = new InstructionObjectArrayAdapter(this, insArr);
+        this.setListAdapter(adapter);
     }
 }

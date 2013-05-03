@@ -90,6 +90,8 @@ public class CreateInstructionActivity extends Activity {
                     
                     Bundle instructionBundle = new Bundle();
                     for(int i = 0; i < instructions.length; i++){
+                    	Log.d("INFO", "placing instruction:  " + instructions[i] + 
+                    			" which is serialized to " + instructions[i]);
                         instructionBundle.putSerializable("instr" + i, (Serializable)instructions[i]);
                     }
                     

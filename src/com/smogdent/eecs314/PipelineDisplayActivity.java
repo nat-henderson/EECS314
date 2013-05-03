@@ -3,6 +3,7 @@ package com.smogdent.eecs314;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.widget.TextView;
 
 public class PipelineDisplayActivity extends Activity {
 
@@ -10,6 +11,10 @@ public class PipelineDisplayActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pipeline);
+        
+        String output = getIntent().getStringExtra("output");
+        
+        ((TextView)findViewById(R.id.text)).setText(output);
     }
 
     @Override

@@ -63,4 +63,9 @@ public abstract class ITypeInstruction extends Instruction {
 		Word result = this.getResult();
 		this.outputRegisters.add(new Register(this.registerRt, result));
 	}
+	
+	public String toString() {
+		return getInstructionName() + " " + lookup(this.registerRt) + " "
+					+ lookup(this.registerRs) + " " + immediate;
+	}
 }

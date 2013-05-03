@@ -3,6 +3,7 @@ package mips.sim;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 
 public abstract class Instruction extends Word {
 	
@@ -54,16 +55,16 @@ public abstract class Instruction extends Word {
 	 * @return the name of the instruction (ADD, ADDI, ect)
 	 */
 	public abstract String getInstructionName();
-
-	public static Instruction fromWord(Memory memory2, RegisterFile regFile2,
-			Word nextInst) {
-		// this needs to return the right KIND of instruction... woooo
-		// this will be a MASSIVE pain in the ass to write.
-		return null;
-	}	
 	
-	public String toString() {
-		return "Instruction:  " + this.inputRegisters.toString() + "   " + this.outputRegisters.toString();
+	public abstract String toString();
+	
+	public String lookup(int registerID) {
+		for (Map.Entry<String, Integer> entry : InstructionBuilder.registerMap.entrySet()) {
+			if (entry.getValue() == registerID) {
+				return entry.getKey();
+			}
+		}
+		return null;
 	}
 	
 	protected static long unsignedLongFromInt(int i) {

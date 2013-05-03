@@ -42,5 +42,9 @@ public class JumpInstruction extends Instruction {
 	public String getInstructionName() {
 		return "J"; // http://en.wikipedia.org/wiki/Agent_J
 	}
+	
+	public String toString() {
+		return getInstructionName() + " " + this.address;
+	}
 
 }

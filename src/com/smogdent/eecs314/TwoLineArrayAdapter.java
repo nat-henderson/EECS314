@@ -21,6 +21,7 @@ public abstract class TwoLineArrayAdapter<T> extends ArrayAdapter<T> {
         super(context, listItemLayoutResourceId, ts);
         mListItemLayoutResId = listItemLayoutResourceId;
     }
+    
 
     @Override
     public android.view.View getView(

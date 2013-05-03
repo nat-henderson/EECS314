@@ -26,6 +26,7 @@ public class LoadFileDialogFragment extends DialogFragment{
     public Dialog onCreateDialog(Bundle savedInstanceState) {
     	Dialog dialog = null;
     	AlertDialog.Builder builder = new Builder(getActivity());
+    		mFileList = getActivity().fileList();
     		builder.setTitle("Choose your file");
     		if(mFileList == null) {
     			Log.e(TAG, "Showing file picker before loading the file list");

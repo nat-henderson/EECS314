@@ -63,7 +63,7 @@ public abstract class Instruction extends Word {
 	
 	public abstract String toString();
 	
-	public String lookup(int registerID) {
+	public static String lookup(int registerID) {
 		for (Map.Entry<String, Integer> entry : InstructionBuilder.registerMap.entrySet()) {
 			if (entry.getValue() == registerID) {
 				return entry.getKey();

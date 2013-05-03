@@ -1,7 +1,12 @@
 package com.smogdent.eecs314;
 
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,6 +14,7 @@ import java.util.List;
 import mips.sim.Instruction;
 import mips.sim.Memory;
 import mips.sim.RegisterFile;
+import mips.sim.UnsupportedInstructionException;
 import mips.sim.Word;
 import mips.sim.instructions.AddInstruction;
 import android.os.Build;
@@ -39,16 +45,38 @@ public class NewProgramActivity extends ListActivity {
         setContentView(R.layout.activity_new_program);
         Bundle extras = getIntent().getExtras();
         String whatIsThisFile = extras.getString("chosenfile");
-        
+        List<Instruction> instructions = new LinkedList<Instruction>();
         if(!whatIsThisFile.equals("NEW_FILE")) {
         	//it's a saved file, have to actually load it
-        	
+        	try{
+        		FileInputStream fis = openFileInput(whatIsThisFile);
+        		BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+        		String strLine;
+        		while((strLine = br.readLine()) != null) {
+       				Instruction[] arr = mips.sim.InstructionBuilder.buildInstruction(strLine);
+       				for(Instruction i : arr){
+       					instructions.add(i);
+       				}
+        		}
+        	}
+        	catch(FileNotFoundException e){
+        		DialogFragment dialog = new LoadFailedDialogFragment();
+        		dialog.show(getFragmentManager(), "LoadFailedDialogFragment");
+        	}
+        	catch(IOException e){
+        		
+        	}
+        	catch(UnsupportedInstructionException e){
+        		//YOU ARE BAD AND SHOULD FEEL BAD
+        		//TODO: Make a new dialog stating that.
+        	}
+
         }
         else {
         	//do nothing; it's a new file
         }
         
-        List<Instruction> instructions = new LinkedList<Instruction>();
+
         
         Memory memory = new Memory();
         RegisterFile regFile = new RegisterFile();

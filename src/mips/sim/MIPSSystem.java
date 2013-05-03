@@ -22,6 +22,8 @@ public class MIPSSystem {
 	private List<Instruction> stallsQueued = new LinkedList<Instruction>();
 	private Memory memory;
 	private RegisterFile registers;
+	private int nStalls = 0;
+	private int nInstructions = 0;
 	
 	public static MIPSSystem getInstance() {
 		if (system == null)
@@ -72,6 +74,19 @@ public class MIPSSystem {
 	public int length() {
 		return this.idStage.size() + this.eStage.size() + 
 				this.mStage.size() + this.wStage.size();
+	}
+	
+	public float getFrequency() {
+		return Math.min(this.idStage.getMaxFrequencyInHz(), Math.min(this.eStage.getMaxFrequencyInHz(),
+				Math.min(this.mStage.getMaxFrequencyInHz(), this.wStage.getMaxFrequencyInHz())));
+	}
+	
+	public float getTimeInSecondsSoFar() {
+		return (float)(this.nInstructions + this.nStalls) / this.getFrequency();
+	}
+	
+	public float getStallPercentage() {
+		return (float)this.nStalls / (float)(this.nInstructions + this.nStalls);
 	}
 	
 	public void setupForwarding(StageType forwardFrom, StageType forwardTo) {
@@ -190,10 +205,12 @@ public class MIPSSystem {
 			throw new RuntimeException(e);
 		}
 		if (output != null) {
+			nInstructions++;
 			System.out.println("Output:  " + output.toString());
 			System.out.println("RegValue:" + output.outputRegisters.get(0).getWord().asInt());
 		}
 		else {
+			nStalls++;
 			System.out.println("Null output");
 		}
 	}
@@ -218,10 +235,7 @@ public class MIPSSystem {
 			viablePos.add(eStage.size());
 		}
 		if (forwardingMap.get(StageType.MEM).contains(StageType.EX)) {
-			viablePos.add(mStage.size() + eStage.size());
-		}
-		if (forwardingMap.get(StageType.MEM).contains(StageType.MEM)) {
-			viablePos.add(mStage.size());
+			viablePos.add(mStage.size() + eStage.size() + 1);
 		}
 		// 2 is magical: it's the number 1 + 1.  1 for all instructions are 1 ahead
 		// of the one in front of them, and one for instruction fetch which we don't

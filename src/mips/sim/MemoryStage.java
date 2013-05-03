@@ -14,5 +14,7 @@ public class MemoryStage extends Stage {
 			}
 		}
 	}
-
+	public int getStageTimeInNs() {
+		return 750;
+	}
 }

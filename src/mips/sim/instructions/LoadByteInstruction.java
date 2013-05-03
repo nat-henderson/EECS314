@@ -5,11 +5,11 @@ import mips.sim.MemoryLocationNotInitializedException;
 import mips.sim.RegisterFile;
 import mips.sim.Word;
 
-public class LoadByteUnsignedInstruction extends ITypeInstruction {
+public class LoadByteInstruction extends ITypeInstruction {
 
 	private byte loadedByte;
 	
-	public LoadByteUnsignedInstruction(Memory memory, RegisterFile regFile,
+	public LoadByteInstruction(Memory memory, RegisterFile regFile,
 			Word instruction) {
 		super(memory, regFile, instruction);
 		// TODO Auto-generated constructor stub

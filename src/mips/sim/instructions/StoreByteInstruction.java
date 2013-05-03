@@ -3,6 +3,7 @@ package mips.sim.instructions;
 import mips.sim.Memory;
 import mips.sim.RegisterFile;
 import mips.sim.Word;
+import mips.sim.MIPSSystem.StageType;
 
 public class StoreByteInstruction extends ITypeInstruction {
 
@@ -36,6 +37,13 @@ public class StoreByteInstruction extends ITypeInstruction {
 	@Override
 	public void writeback() {
 		// nothing doing
+	}
+	
+	public StageType getOutputReadyAfter() {
+		return StageType.MEM;
+	}
+	public StageType getInputNeededBefore() {
+		return StageType.EX;
 	}
 
 }

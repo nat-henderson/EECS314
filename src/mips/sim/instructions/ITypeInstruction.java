@@ -5,6 +5,7 @@ import mips.sim.Memory;
 import mips.sim.Register;
 import mips.sim.RegisterFile;
 import mips.sim.Word;
+import mips.sim.MIPSSystem.StageType;
 
 public abstract class ITypeInstruction extends Instruction {
 	
@@ -45,6 +46,13 @@ public abstract class ITypeInstruction extends Instruction {
 	public void instructionDecode() {
 		this.inputRegisters.clear();
 		this.inputRegisters.add(this.regFile.getRegister(this.registerRs));
+	}
+	
+	public StageType getOutputReadyAfter() {
+		return StageType.EX;
+	}
+	public StageType getInputNeededBefore() {
+		return StageType.EX;
 	}
 	
 	@Override

@@ -5,6 +5,7 @@ import mips.sim.MIPSSystem;
 import mips.sim.Memory;
 import mips.sim.RegisterFile;
 import mips.sim.Word;
+import mips.sim.MIPSSystem.StageType;
 
 public class JumpInstruction extends Instruction {
 
@@ -41,6 +42,13 @@ public class JumpInstruction extends Instruction {
 	@Override
 	public String getInstructionName() {
 		return "J"; // http://en.wikipedia.org/wiki/Agent_J
+	}
+	
+	public StageType getOutputReadyAfter() {
+		return StageType.EX;
+	}
+	public StageType getInputNeededBefore() {
+		return StageType.EX;
 	}
 	
 	public String toString() {

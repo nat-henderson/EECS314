@@ -8,6 +8,7 @@ import mips.sim.Memory;
 import mips.sim.Register;
 import mips.sim.RegisterFile;
 import mips.sim.Word;
+import mips.sim.MIPSSystem.StageType;
 
 public abstract class RTypeInstruction extends Instruction {
 	
@@ -56,6 +57,13 @@ public abstract class RTypeInstruction extends Instruction {
 	@Override
 	public void writeback() {
 		this.regFile.putRegister(this.registerRd, this.outputRegisters.get(0).getWord());
+	}
+	
+	public StageType getOutputReadyAfter() {
+		return StageType.EX;
+	}
+	public StageType getInputNeededBefore() {
+		return StageType.EX;
 	}
 	
 	protected abstract Word getResult();

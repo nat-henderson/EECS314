@@ -5,14 +5,19 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
+import mips.sim.MIPSSystem.StageType;
+
 public abstract class Instruction extends Word {
 	
-	protected Memory memory;
-	protected RegisterFile regFile;
+	public Memory memory;
+	public RegisterFile regFile;
 	
 	// oh no protected access
 	public List<Register> inputRegisters;
 	public List<Register> outputRegisters;
+	
+	public abstract StageType getOutputReadyAfter();
+	public abstract StageType getInputNeededBefore();
 	
 	public Instruction(Memory memory, RegisterFile regFile, Word instruction) {
 		super(instruction.asByteArray());

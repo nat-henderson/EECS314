@@ -5,6 +5,7 @@ import mips.sim.Memory;
 import mips.sim.Register;
 import mips.sim.RegisterFile;
 import mips.sim.Word;
+import mips.sim.MIPSSystem.StageType;
 
 public abstract class IntegerMathInstruction extends Instruction {
 
@@ -74,6 +75,13 @@ public abstract class IntegerMathInstruction extends Instruction {
 	public String toString() {
 		return getInstructionName() + " " + lookup(this.registerRs) + " "
 					+ lookup(this.registerRt);
+	}
+	
+	public StageType getOutputReadyAfter() {
+		return StageType.EX;
+	}
+	public StageType getInputNeededBefore() {
+		return StageType.EX;
 	}
 
 }

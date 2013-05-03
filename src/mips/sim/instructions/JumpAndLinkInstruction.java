@@ -3,8 +3,10 @@ package mips.sim.instructions;
 import mips.sim.Instruction;
 import mips.sim.MIPSSystem;
 import mips.sim.Memory;
+import mips.sim.Register;
 import mips.sim.RegisterFile;
 import mips.sim.Word;
+import mips.sim.MIPSSystem.StageType;
 
 public class JumpAndLinkInstruction extends Instruction {
 
@@ -15,6 +17,7 @@ public class JumpAndLinkInstruction extends Instruction {
 		
 		int bitmask = 0x3FFFFFFF;
 		this.address = instruction.asInt() & bitmask;
+		this.outputRegisters.add(new Register(31, null));
 	}
 
 	@Override
@@ -25,8 +28,15 @@ public class JumpAndLinkInstruction extends Instruction {
 	@Override
 	public void executeInstruction() {
 		this.outputRegisters.clear();
-		this.regFile.putRegister(31, MIPSSystem.getProgramCounter() + 8);
+		this.outputRegisters.add(new Register(31, new Word(MIPSSystem.getProgramCounter() + 8)));
 		MIPSSystem.jumpProgramCounter(this.address); // for great justice
+	}
+	
+	public StageType getOutputReadyAfter() {
+		return StageType.EX;
+	}
+	public StageType getInputNeededBefore() {
+		return StageType.EX;
 	}
 
 	@Override
@@ -36,7 +46,7 @@ public class JumpAndLinkInstruction extends Instruction {
 
 	@Override
 	public void writeback() {
-		// nothing doing
+		this.regFile.putRegister(31, this.outputRegisters.get(0).getWord());
 	}
 
 	@Override

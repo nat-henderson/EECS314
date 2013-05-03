@@ -3,6 +3,7 @@ package mips.sim.instructions;
 import mips.sim.Memory;
 import mips.sim.RegisterFile;
 import mips.sim.Word;
+import mips.sim.MIPSSystem.StageType;
 
 public class LoadUpperImmediateInstruction extends ITypeInstruction {
 
@@ -21,6 +22,13 @@ public class LoadUpperImmediateInstruction extends ITypeInstruction {
 	@Override
 	public String getInstructionName() {
 		return "LUI";
+	}
+	
+	public StageType getOutputReadyAfter() {
+		return StageType.MEM;
+	}
+	public StageType getInputNeededBefore() {
+		return StageType.EX;
 	}
 
 }

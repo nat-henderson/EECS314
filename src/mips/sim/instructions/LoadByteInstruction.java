@@ -4,6 +4,7 @@ import mips.sim.Memory;
 import mips.sim.MemoryLocationNotInitializedException;
 import mips.sim.RegisterFile;
 import mips.sim.Word;
+import mips.sim.MIPSSystem.StageType;
 
 public class LoadByteInstruction extends ITypeInstruction {
 
@@ -46,6 +47,13 @@ public class LoadByteInstruction extends ITypeInstruction {
 		int bitmask = 0x000000FF;
 		int result = bitmask & (int)( loadedByte );
 		this.regFile.putRegister(this.registerRt, result);
+	}
+	
+	public StageType getOutputReadyAfter() {
+		return StageType.MEM;
+	}
+	public StageType getInputNeededBefore() {
+		return StageType.EX;
 	}
 
 }

@@ -107,7 +107,7 @@ public class CreateInstructionActivity extends Activity {
             
         };
         
-        findViewById(R.id.button1).setOnClickListener(listener);
+        findViewById(R.id.OKButton).setOnClickListener(listener);
         
     }
 

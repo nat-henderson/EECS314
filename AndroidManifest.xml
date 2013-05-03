@@ -7,6 +7,7 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="17" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -58,6 +59,10 @@
         <activity
             android:name="com.smogdent.eecs314.CreateInstructionActivity"
             android:label="@string/title_activity_create_instruction" >
+        </activity>
+        <activity
+            android:name="com.smogdent.eecs314.PipelineDisplayActivity"
+            android:label="@string/title_activity_pipeline" >
         </activity>
     </application>
 

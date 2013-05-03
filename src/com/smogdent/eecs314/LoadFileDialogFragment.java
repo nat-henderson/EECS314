@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -34,6 +35,7 @@ public class LoadFileDialogFragment extends DialogFragment{
     		builder.setItems(mFileList, new DialogInterface.OnClickListener() {
     			public void onClick(DialogInterface dialog, int which) {
     				mChosenFile = mFileList[which];
+    				startActivity(new Intent(getActivity(), NewProgramActivity.class));
     			}
     		});
     	dialog = builder.show();

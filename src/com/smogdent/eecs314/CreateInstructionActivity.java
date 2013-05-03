@@ -12,23 +12,46 @@ public class CreateInstructionActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_instruction);
 
         Bundle extras = getIntent().getExtras();
         InstructionWrapper iw = new InstructionWrapper();
-        String instruction = extras.getString("instruction", "ADDI");
         
-        TextView name = (TextView)findViewById(R.id.name);
-        name.setText(instruction);
-        TextView description = (TextView)findViewById(R.id.description);
-        description.setText(iw.getDescription(instruction));
+        if(extras.containsKey("instruction")){
+            String instruction = extras.getString("instruction", "ADDI");
+
+            String lowerCaseInstruction = instruction.toLowerCase();
+            if(lowerCaseInstruction.equals("addi") || lowerCaseInstruction.equals("addiu")
+                    || lowerCaseInstruction.equals("andi") || lowerCaseInstruction.equals("beq")
+                    || lowerCaseInstruction.equals("bne") || lowerCaseInstruction.equals("lui")
+                    || lowerCaseInstruction.equals("lw") || lowerCaseInstruction.equals("ori")
+                    || lowerCaseInstruction.equals("sw")|| lowerCaseInstruction.equals("slti") 
+                    || lowerCaseInstruction.equals("sltiu") || lowerCaseInstruction.equals("xori")) {
+                setContentView(R.layout.i_type_instruction);
+
+            } else{ 
+                setContentView(R.layout.r_type_instruction);
+            }
+            
+            
+            
+            
+            TextView name = (TextView)findViewById(R.id.name);
+            name.setText(instruction);
+            TextView description = (TextView)findViewById(R.id.description);
+            description.setText(iw.getDescription(instruction));
+            
+        }
+        
+        
         
         String[] registers = getResources().getStringArray(R.array.registers);
         
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, registers);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, android.R.id.text1, registers);
         ((Spinner)findViewById(R.id.spinner1)).setAdapter(adapter);
         ((Spinner)findViewById(R.id.spinner2)).setAdapter(adapter);
-        ((Spinner)findViewById(R.id.spinner3)).setAdapter(adapter);
+        if(findViewById(R.id.spinner3) != null){
+            ((Spinner)findViewById(R.id.spinner3)).setAdapter(adapter);
+        }
     }
 
     @Override

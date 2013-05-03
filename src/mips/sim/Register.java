@@ -1,6 +1,8 @@
 package mips.sim;
 
-public class Register {
+import java.io.Serializable;
+
+public class Register implements Serializable {
 	
 	private int registerId;
 	private Word data;

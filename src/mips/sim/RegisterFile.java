@@ -1,6 +1,8 @@
 package mips.sim;
 
-public class RegisterFile {
+import java.io.Serializable;
+
+public class RegisterFile implements Serializable {
 	
 	private Word[] registers;
 	

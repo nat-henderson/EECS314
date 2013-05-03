@@ -1,6 +1,9 @@
 package mips.sim.instructions;
 
+import java.util.Map;
+
 import mips.sim.Instruction;
+import mips.sim.InstructionBuilder;
 import mips.sim.Memory;
 import mips.sim.Register;
 import mips.sim.RegisterFile;
@@ -62,6 +65,11 @@ public abstract class RTypeInstruction extends Instruction {
 		this.outputRegisters.clear();
 		Word result = this.getResult();
 		this.outputRegisters.add(new Register(this.registerRd, result));
+	}
+	
+	public String toString() {
+		return getInstructionName() + " " + lookup(this.registerRd) + " "
+					+ lookup(this.registerRs) + " " + lookup(this.registerRt);
 	}
 
 }

@@ -37,5 +37,9 @@ public class Word implements Serializable {
 		System.arraycopy(bytes, 0, bytearr, 0, 4);
 		return bytearr;
 	}
+	
+	public String toString() {
+		return "int: " + this.asInt() + " float: " + this.asFloat();
+	}
 
 }

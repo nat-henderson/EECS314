@@ -19,5 +19,14 @@ public class Register implements Serializable {
 	public int getId() {
 		return this.registerId;
 	}
+	
+	@Override
+	public String toString() {
+		if (data != null) {
+			return "Register ID: " + registerId + ", data: (" + data.toString() + ")";
+		} else {
+			return "Null register, ID: " + registerId;
+		}
+	}
 
 }

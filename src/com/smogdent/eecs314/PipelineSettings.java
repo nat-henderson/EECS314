@@ -37,7 +37,7 @@ public class PipelineSettings extends Activity {
             settings.putBoolean("noForwarding", ((Checkable)findViewById(R.id.noForwarding)).isChecked());
             settings.putBoolean("exToEx", ((Checkable)findViewById(R.id.exToEx)).isChecked());
             
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, NewProgramActivity.class);
             intent.putExtra("settings", settings);
             startActivity(intent);
         }

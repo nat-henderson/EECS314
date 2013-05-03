@@ -53,6 +53,8 @@ public class InstructionBuilder {
 		registerMap.put("$sp", 29);
 		registerMap.put("$fp", 30);
 		registerMap.put("$ra", 31);
+		registerMap.put("HI", 33);
+		registerMap.put("LO", 34);
 		
 		initSystems();
 	}
@@ -64,7 +66,6 @@ public class InstructionBuilder {
 			throws UnsupportedInstructionException {
 		Scanner s = new Scanner(line);
 		String instruction = s.next();
-		System.out.println(instruction);
 		String lowerCaseInstruction = instruction.toLowerCase();
 		if(lowerCaseInstruction.equals("add") || lowerCaseInstruction.equals("addu")
 				|| lowerCaseInstruction.equals("and") || lowerCaseInstruction.equals("jr")
@@ -72,8 +73,10 @@ public class InstructionBuilder {
 				|| lowerCaseInstruction.equals("slt") || lowerCaseInstruction.equals("sltu")
 				|| lowerCaseInstruction.equals("sra") || lowerCaseInstruction.equals("srl")
 				|| lowerCaseInstruction.equals("sub") || lowerCaseInstruction.equals("subu")
-				|| lowerCaseInstruction.equals("xor") || lowerCaseInstruction.equals("nor")) {
-			System.out.println("R type detected");
+				|| lowerCaseInstruction.equals("xor") || lowerCaseInstruction.equals("nor")
+				|| lowerCaseInstruction.equals("mult") || lowerCaseInstruction.equals("multu")
+				|| lowerCaseInstruction.equals("div") || lowerCaseInstruction.equals("divu")
+				|| lowerCaseInstruction.equals("mfhi") || lowerCaseInstruction.equals("mflo")) {
 			return buildRtypeInstruction(line, instruction, s);
 		}
 		else if(lowerCaseInstruction.equals("addi") || lowerCaseInstruction.equals("addiu")
@@ -81,7 +84,8 @@ public class InstructionBuilder {
 				|| lowerCaseInstruction.equals("bne") || lowerCaseInstruction.equals("lui")
 				|| lowerCaseInstruction.equals("lw") || lowerCaseInstruction.equals("ori")
 				|| lowerCaseInstruction.equals("sw") || lowerCaseInstruction.equals("slti") 
-				|| lowerCaseInstruction.equals("sltiu") || lowerCaseInstruction.equals("xori")) {
+				|| lowerCaseInstruction.equals("sltiu") || lowerCaseInstruction.equals("xori")
+				|| lowerCaseInstruction.equals("lb") || lowerCaseInstruction.equals("sb")) {
 			return buildItypeInstruction(line, instruction, s);
 		}
 		else if(lowerCaseInstruction.equals("j") || lowerCaseInstruction.equals("jal")) {
@@ -120,8 +124,13 @@ public class InstructionBuilder {
 		else if(lowerCaseInstruction.equals("jr")) {
 			registerRs = registerMap.get(s.next().replaceAll(",", ""));
 		}
-		else{
-			throw new UnsupportedInstructionException();
+		else if (lowerCaseInstruction.equals("mult") || lowerCaseInstruction.equals("multu")
+				|| lowerCaseInstruction.equals("div") || lowerCaseInstruction.equals("divu")) {
+			registerRs = registerMap.get(s.next().replaceAll(",", ""));
+			registerRt = registerMap.get(s.next().replaceAll(",", ""));
+		}
+		else if (lowerCaseInstruction.equals("mfhi") || lowerCaseInstruction.equals("mflo")) {
+			registerRd = registerMap.get(s.next().replaceAll(",", ""));
 		}
 		
 		Instruction[] instr = new Instruction[1];
@@ -131,7 +140,6 @@ public class InstructionBuilder {
 			funct = 0x20;
 			w = new Word(funct | (shamt << 6) | (registerRd << 11) | (registerRt << 16) |
 					(registerRs << 21) | (opcode << 26));
-			System.out.println("adding stuff");
 			instr[0] = new AddInstruction(memory, regFile, w);
 		}
 		else if(lowerCaseInstruction.equals("addu")) {
@@ -212,8 +220,41 @@ public class InstructionBuilder {
 					(registerRs << 21) | (opcode << 26));
 			instr[0] = new SubtractUnsignedInstruction(memory, regFile, w);
 		}
-		else{
-			throw new UnsupportedInstructionException();
+		else if (lowerCaseInstruction.equals("mult")) {
+			funct = 0x18;
+			w = new Word(funct | (shamt << 6) | (registerRd << 11) | (registerRt << 16) |
+					(registerRs << 21) | (opcode << 26));
+			instr[0] = new SubtractUnsignedInstruction(memory, regFile, w);
+		}
+		else if (lowerCaseInstruction.equals("multu")) {
+			funct = 0x19;
+			w = new Word(funct | (shamt << 6) | (registerRd << 11) | (registerRt << 16) |
+					(registerRs << 21) | (opcode << 26));
+			instr[0] = new SubtractUnsignedInstruction(memory, regFile, w);
+		}
+		else if (lowerCaseInstruction.equals("div")) {
+			funct = 0x1A;
+			w = new Word(funct | (shamt << 6) | (registerRd << 11) | (registerRt << 16) |
+					(registerRs << 21) | (opcode << 26));
+			instr[0] = new SubtractUnsignedInstruction(memory, regFile, w);
+		}
+		else if (lowerCaseInstruction.equals("divu")) {
+			funct = 0x1B;
+			w = new Word(funct | (shamt << 6) | (registerRd << 11) | (registerRt << 16) |
+					(registerRs << 21) | (opcode << 26));
+			instr[0] = new SubtractUnsignedInstruction(memory, regFile, w);
+		}
+		else if (lowerCaseInstruction.equals("mfhi")) {
+			funct = 0x10;
+			w = new Word(funct | (shamt << 6) | (registerRd << 11) | (registerRt << 16) |
+					(registerRs << 21) | (opcode << 26));
+			instr[0] = new SubtractUnsignedInstruction(memory, regFile, w);
+		}
+		else if (lowerCaseInstruction.equals("mflo")) {
+			funct = 0x12;
+			w = new Word(funct | (shamt << 6) | (registerRd << 11) | (registerRt << 16) |
+					(registerRs << 21) | (opcode << 26));
+			instr[0] = new SubtractUnsignedInstruction(memory, regFile, w);
 		}
 		return instr;
 	}
@@ -233,7 +274,8 @@ public class InstructionBuilder {
 			registerRs = registerMap.get(s.next().replaceAll(",", ""));
 			immediate = s.nextInt();
 		}
-		else if(lowerCaseInstruction.equals("sw") || lowerCaseInstruction.equals("lw")) {
+		else if(lowerCaseInstruction.equals("sw") || lowerCaseInstruction.equals("lw")
+				|| lowerCaseInstruction.equals("lb") || lowerCaseInstruction.equals("sb")) {
 			registerRt = registerMap.get(s.next().replaceAll(",", ""));
 			String addr = s.next();
 			int scan;
@@ -285,6 +327,10 @@ public class InstructionBuilder {
 		}
 		else if(lowerCaseInstruction.equals("xori")) {
 			opcode = 0x0E;
+		} else if (lowerCaseInstruction.equals("lb")) {
+			opcode = 0x20;
+		} else if (lowerCaseInstruction.equals("sb")) {
+			opcode = 0x28;
 		}
 
 		
@@ -320,6 +366,12 @@ public class InstructionBuilder {
 		}
 		else if(lowerCaseInstruction.equals("xori")) {
 			instr[0] = new XorImmediateInstruction(memory, regFile, w);
+		}
+		else if (lowerCaseInstruction.equals("lb")) {
+			instr[0] = new LoadByteInstruction(memory, regFile, w);
+		}
+		else if (lowerCaseInstruction.equals("sb")) {
+			instr[0] = new StoreByteInstruction(memory, regFile, w);
 		}
 		
 		return instr;

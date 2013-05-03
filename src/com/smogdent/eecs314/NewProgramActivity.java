@@ -166,6 +166,8 @@ public class NewProgramActivity extends ListActivity {
                 		output.append("Register " + Instruction.lookup(r.getId()) + ":  " + r.getWord().asInt());
                 	}
                 	// TODO:  code to open up the display window!
+
+                    startActivity(new Intent(getApplicationContext(), PipelineDisplayActivity.class).putExtra("output", output.toString()));
                 }
                 
                 else if (view.getId() == R.id.settingsButton){

@@ -7,14 +7,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 import mips.sim.Instruction;
-import mips.sim.InstructionBuilder;
 import mips.sim.Memory;
 import mips.sim.RegisterFile;
 import mips.sim.UnsupportedInstructionException;
@@ -30,12 +27,8 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -113,7 +106,7 @@ public class NewProgramActivity extends ListActivity {
                 	}
                 }
                 
-                if (view.getId() == R.id.goButton){
+                else if (view.getId() == R.id.goButton){
                     //TODO: GO!
                 }
             }
@@ -130,7 +123,7 @@ public class NewProgramActivity extends ListActivity {
                 //String instruction = ((TextView) view).getText().toString();
                 // bundling level, instruction
                 //Intent intent = new Intent(getApplicationContext(), ItemDetailActivity.class);
-                //intent.putExtra("insruction", (Serializable)insArr[position]);
+                //intent.putExtra("instruction", (Serializable)insArr[position]);
                 //startActivity(intent);
             }
         };

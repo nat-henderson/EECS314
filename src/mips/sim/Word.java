@@ -1,6 +1,8 @@
 package mips.sim;
 
-public class Word {
+import java.io.Serializable;
+
+public class Word implements Serializable {
 	
 	private byte[] bytes = new byte[4];
 	

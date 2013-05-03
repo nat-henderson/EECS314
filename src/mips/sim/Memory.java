@@ -1,9 +1,10 @@
 package mips.sim;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Memory {
+public class Memory implements Serializable {
 	/*Most of memory is empty; I'm going to go for a map of integer (address) to Word*/
 	private Map<Integer, Byte> memory;
 	

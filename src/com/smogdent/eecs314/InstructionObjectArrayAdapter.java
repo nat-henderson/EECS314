@@ -15,7 +15,7 @@ public class InstructionObjectArrayAdapter extends TwoLineArrayAdapter<Instructi
         super(context, ts);
         this.context = context;
     }
-
+    
     @Override
     public String lineOneText(Instruction t) {
         return t.getInstructionName();
@@ -24,24 +24,7 @@ public class InstructionObjectArrayAdapter extends TwoLineArrayAdapter<Instructi
 
     @Override
     public String lineTwoText(Instruction t) {
-        List<Register> inRegs = t.getInputRegisters();
-        List<Register> outRegs = t.getOutputRegisters();
-        
-        StringBuilder args = new StringBuilder();
-        
-        for (Register r: inRegs){
-            args.append("$" + r.getId() + " ");
-        }
-        
-        for (Register r: outRegs){
-            args.append("$" + r.getId() + " ");
-        }
-        
-        if (t instanceof mips.sim.instructions.ITypeInstruction){
-            args.append(((ITypeInstruction) t).getImmediate());
-        }
-        
-        return args.toString();
+        return t.toString();
     }
 
 }

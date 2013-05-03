@@ -24,6 +24,7 @@ import android.annotation.TargetApi;
 import android.app.DialogFragment;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -149,16 +150,22 @@ public class NewProgramActivity extends ListActivity {
         return true;
     }
     
-    protected void onRestart(){
+    protected void onResume(){
+    
+        super.onResume();
         
         //if we got a instruction, add the instruction to the instruction list! 
-        Bundle extras = getIntent().getExtras();
-        if((extras != null) && extras.containsKey("instructions")){
-            
-            Bundle iBundle = extras.getBundle("instructions");
-            Set<String> keys = iBundle.keySet();
-            for (String s : keys){
-                instructions.add((Instruction)extras.getSerializable("s"));
+        if(getIntent() != null){
+            Log.d("INFO", "has intent");
+            Bundle extras = getIntent().getExtras();
+            if((extras != null) && extras.containsKey("instructions")){
+                Log.d("INFO", "got instructions bundle");
+                Bundle iBundle = extras.getBundle("instructions");
+                Set<String> keys = iBundle.keySet();
+                Log.d("INFO", "got key set sized " + keys.size());
+                for (String s : keys){
+                    instructions.add((Instruction)extras.getSerializable(s));
+                }
             }
         }
     }

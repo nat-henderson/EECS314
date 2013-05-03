@@ -168,11 +168,15 @@ public class MIPSSystem {
 		
 		if (nextInst != null) {
 			List<Integer> positionsAhead = new ArrayList<Integer>();
-			List<Integer> viablePositionsAhead = getViablePositionsAhead();
+			List<Integer> viablePositionsAhead = new ArrayList<Integer>();
+			for (int i = 0; i < this.length() * 3; i++) {
+				viablePositionsAhead.add(i);
+			}
 			for (Register r : nextInst.inputRegisters) {
 				int earliest = this.getEarliestInstructionPosition(r.getId());
 				if (earliest > 0) {
 					positionsAhead.add(earliest);
+					removeInvalidPositions(viablePositionsAhead, this.getEarliestInstruction(r.getId()));
 				}
 			}
 			int stalls;
@@ -215,6 +219,50 @@ public class MIPSSystem {
 		}
 	}
 	
+	private Instruction getEarliestInstruction(int id) {
+		for (Instruction i : this.idStage.instructions) {
+			if (i == null) {
+				continue;
+			}
+			for (Register out : i.outputRegisters) {
+				if (out.getId() == id) {
+					return i;
+				}
+			}
+		}
+		for (Instruction i : this.eStage.instructions) {
+			if (i == null) {
+				continue;
+			}
+			for (Register out : i.outputRegisters) {
+				if (out.getId() == id) {
+					return i;
+				}
+			}
+		}
+		for (Instruction i : this.mStage.instructions) {
+			if (i == null) {
+				continue;
+			}
+			for (Register out : i.outputRegisters) {
+				if (out.getId() == id) {
+					return i;
+				}
+			}
+		}
+		for (Instruction i : this.wStage.instructions) {
+			if (i == null) {
+				continue;
+			}
+			for (Register out : i.outputRegisters) {
+				if (out.getId() == id) {
+					return i;
+				}
+			}
+		}
+		return null;	
+	}
+
 	private boolean checkIsViable(List<Integer> viablePositionsAhead,
 			List<Integer> positionsAhead, int stalls) {
 		System.out.println("Ahead:  " + positionsAhead.toString());
@@ -229,12 +277,15 @@ public class MIPSSystem {
 		return true;
 	}
 
-	private List<Integer> getViablePositionsAhead() {
+	private void removeInvalidPositions(List<Integer> viable, Instruction instToCheck) {
 		List<Integer> viablePos = new LinkedList<Integer>();
-		if (forwardingMap.get(StageType.EX).contains(StageType.EX)) {
+		if (forwardingMap.get(StageType.EX).contains(StageType.EX) && 
+				instToCheck.getOutputReadyAfter() == StageType.EX) {
 			viablePos.add(eStage.size());
 		}
-		if (forwardingMap.get(StageType.MEM).contains(StageType.EX)) {
+		if (forwardingMap.get(StageType.MEM).contains(StageType.EX) &&
+				(instToCheck.getOutputReadyAfter() == StageType.EX ||
+				instToCheck.getOutputReadyAfter() == StageType.MEM)) {
 			viablePos.add(mStage.size() + eStage.size() + 1);
 		}
 		// 2 is magical: it's the number 1 + 1.  1 for all instructions are 1 ahead
@@ -243,8 +294,13 @@ public class MIPSSystem {
 		for (int i = this.length() + 2; i < this.length() * 3; i++) {
 			viablePos.add(i);
 		}
-		System.out.println("Viable:  " + viablePos.toString());
-		return viablePos;
+		
+		for (int i = 0; i < this.length() * 3; i++) {
+			if (viable.contains(i) && !viablePos.contains(i)) {
+				viable.remove((Integer)i);
+			}
+		}
+		System.out.println("Viable:  " + viable.toString());
 	}
 
 	private int getEarliestInstructionPosition(int id) {
@@ -308,7 +364,7 @@ public class MIPSSystem {
 		instList.add(new AddInstruction(mem, regFile, new Word(0)));
 		instList.add(new AddInstruction(mem, regFile, new Word(0)));
 		MIPSSystem ms = new MIPSSystem(instList, 1,1,1,1);
-		ms.setupForwarding(StageType.EX, StageType.EX);
+		//ms.setupForwarding(StageType.EX, StageType.EX);
 		ms.run(30);
 	}
 }

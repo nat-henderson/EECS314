@@ -34,6 +34,8 @@ public abstract class ITypeInstruction extends Instruction {
 		if (sign == 0x800) { // if negative number, extend sign
 			this.immediate |= 0xffff0000;
 		}
+		this.outputRegisters.add(new Register(this.registerRt, null));
+		this.inputRegisters.add(new Register(this.registerRs, null));
 	}
 	
 	protected abstract Word getResult();

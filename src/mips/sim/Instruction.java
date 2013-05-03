@@ -10,8 +10,8 @@ public abstract class Instruction extends Word {
 	protected RegisterFile regFile;
 	
 	// oh no protected access
-	protected List<Register> inputRegisters;
-	protected List<Register> outputRegisters;
+	public List<Register> inputRegisters;
+	public List<Register> outputRegisters;
 	
 	public Instruction(Memory memory, RegisterFile regFile, Word instruction) {
 		super(instruction.asByteArray());

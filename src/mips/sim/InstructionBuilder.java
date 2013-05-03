@@ -66,7 +66,6 @@ public class InstructionBuilder {
 			throws UnsupportedInstructionException {
 		Scanner s = new Scanner(line);
 		String instruction = s.next();
-		System.out.println(instruction);
 		String lowerCaseInstruction = instruction.toLowerCase();
 		if(lowerCaseInstruction.equals("add") || lowerCaseInstruction.equals("addu")
 				|| lowerCaseInstruction.equals("and") || lowerCaseInstruction.equals("jr")
@@ -78,7 +77,6 @@ public class InstructionBuilder {
 				|| lowerCaseInstruction.equals("mult") || lowerCaseInstruction.equals("multu")
 				|| lowerCaseInstruction.equals("div") || lowerCaseInstruction.equals("divu")
 				|| lowerCaseInstruction.equals("mfhi") || lowerCaseInstruction.equals("mflo")) {
-			System.out.println("R type detected");
 			return buildRtypeInstruction(line, instruction, s);
 		}
 		else if(lowerCaseInstruction.equals("addi") || lowerCaseInstruction.equals("addiu")
@@ -142,7 +140,6 @@ public class InstructionBuilder {
 			funct = 0x20;
 			w = new Word(funct | (shamt << 6) | (registerRd << 11) | (registerRt << 16) |
 					(registerRs << 21) | (opcode << 26));
-			System.out.println("adding stuff");
 			instr[0] = new AddInstruction(memory, regFile, w);
 		}
 		else if(lowerCaseInstruction.equals("addu")) {

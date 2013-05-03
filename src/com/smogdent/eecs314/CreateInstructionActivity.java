@@ -8,6 +8,7 @@ import mips.sim.UnsupportedInstructionException;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -84,7 +85,8 @@ public class CreateInstructionActivity extends Activity {
                     sb.append(((EditText)findViewById(R.id.immediate)).getText().toString());
                 }
                 try {
-                    Instruction[] instructions = InstructionBuilder.buildInstruction(instruction);
+                    Log.d("INFO", "string: " + sb.toString());
+                    Instruction[] instructions = InstructionBuilder.buildInstruction(sb.toString());
                     
                     Bundle instructionBundle = new Bundle();
                     for(int i = 0; i < instructions.length; i++){
@@ -105,7 +107,7 @@ public class CreateInstructionActivity extends Activity {
             
         };
         
-        
+        findViewById(R.id.button1).setOnClickListener(listener);
         
     }
 

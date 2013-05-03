@@ -2,15 +2,13 @@ package com.smogdent.eecs314;
 
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 import mips.sim.Instruction;
@@ -24,12 +22,11 @@ import mips.sim.MIPSSystem.StageType;
 import mips.sim.instructions.AddInstruction;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.annotation.TargetApi;
 import android.app.DialogFragment;
 import android.app.ListActivity;
-import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -49,6 +46,9 @@ public class NewProgramActivity extends ListActivity {
     int wbCycles = 1;
     boolean exToEx = false;
     boolean memToEx = false;
+    InstructionDbHelper mDb;
+    int fileId = -1;
+    String fileName = "";
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -63,30 +63,24 @@ public class NewProgramActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_program);
         Bundle extras = getIntent().getExtras();
-        String whatIsThisFile = extras.getString("chosenfile");
-        if(whatIsThisFile != null && !whatIsThisFile.equals("NEW_FILE")) {
-        	//it's a saved file, have to actually load it
-        	try{
-        		FileInputStream fis = openFileInput(whatIsThisFile);
-        		BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-        		String strLine;
-        		while((strLine = br.readLine()) != null) {
-       				Instruction[] arr = mips.sim.InstructionBuilder.buildInstruction(strLine);
-       				for(Instruction i : arr){
-       					instructions.add(i);
-       				}
+        int whatIsThisFile = extras.getInt("chosenfile");
+        if(whatIsThisFile != -1) {
+        	//it's a saved file, actually have to load it
+        	fileId = whatIsThisFile;
+        	mDb.open();
+        	Cursor cursor = mDb.fetchFile(fileId);
+        	String input = cursor.getString(2);
+        	Scanner sc = new Scanner(input);
+        	while(sc.hasNextLine()){
+        		try{
+        		Instruction[] arr = mips.sim.InstructionBuilder.buildInstruction(sc.nextLine());
+        		for(Instruction i : arr){
+        			instructions.add(i);
         		}
-        	}
-        	catch(FileNotFoundException e){
-        		DialogFragment dialog = new LoadFailedDialogFragment();
-        		dialog.show(getFragmentManager(), "LoadFailedDialogFragment");
-        	}
-        	catch(IOException e){
-        		
-        	}
-        	catch(UnsupportedInstructionException e){
-        		//YOU ARE BAD AND SHOULD FEEL BAD
-        		//TODO: Make a new dialog stating that.
+        		}
+        		catch(UnsupportedInstructionException e){
+        			Log.e("INFO", "You tried to use an unsupported instruction.");
+        		}
         	}
 
         }
@@ -117,31 +111,20 @@ public class NewProgramActivity extends ListActivity {
                     startActivity(new Intent(getApplicationContext(), CategoryListActivity.class));
                 }
                 else if(view.getId() == R.id.saveButton){
-                	String state = Environment.getExternalStorageState();
-                	
-                	if(Environment.MEDIA_MOUNTED.equals(state)) {
-                		//we can write to the media
-                		String root = Environment.getExternalStorageDirectory().toString();
-                		File directory = new File(root + "/com.smogdent.eecs314");
-                		directory.mkdirs();
-                		Date date = new Date();
-                		String fileName = "File " + date.getTime();
-                		File file = new File(getExternalFilesDir(null), fileName);
-                		try{
-                			Instruction i;
-                			FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
-                			while((i = instructions.remove(0)) != null) {
-                				fos.write(i.toString().getBytes());
-                			}
-                			fos.close();
-                		}
-                		catch(Exception e){
-                			
-                		}
-                		DialogFragment dialog = new SaveFileDialogFragment();
-                		dialog.show(getFragmentManager(), "SaveFileDialogFragment");
-                			
+                	StringBuilder builder = new StringBuilder();
+                	Instruction i;
+                	while((i = instructions.remove(0)) != null){
+                		builder.append(i.toString());
                 	}
+                	mDb.open();
+                	if(mDb.fetchFile(fileId) != null) {
+                		//note already exists
+                		mDb.updateFile(fileId, fileName, builder.toString());
+                	}
+                	else {
+                		mDb.createFile(fileName, builder.toString());
+                	}
+                	mDb.close();
                 }
                 
                 else if (view.getId() == R.id.goButton){

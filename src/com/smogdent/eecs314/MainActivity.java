@@ -26,7 +26,7 @@ public class MainActivity extends Activity{
     
     public void onClick(View view){
         if (view.getId() == R.id.newButton){
-            startActivity(new Intent(this, NewProgramActivity.class).putExtra("chosenfile", "NEW_FILE"));
+            startActivity(new Intent(this, NewProgramActivity.class).putExtra("chosenfile", -1));
         }
         else if(view.getId() == R.id.loadButton){
         	DialogFragment dialog = new LoadFileDialogFragment();

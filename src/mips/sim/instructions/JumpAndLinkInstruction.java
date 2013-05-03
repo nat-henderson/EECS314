@@ -43,5 +43,9 @@ public class JumpAndLinkInstruction extends Instruction {
 	public String getInstructionName() {
 		return "JAL"; // http://en.wikipedia.org/wiki/Agent_J
 	}
+	
+	public String toString() {
+		return getInstructionName() + " " + this.address;
+	}
 
 }

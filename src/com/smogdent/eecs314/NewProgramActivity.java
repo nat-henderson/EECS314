@@ -8,10 +8,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import mips.sim.Instruction;
+import mips.sim.InstructionBuilder;
 import mips.sim.Memory;
 import mips.sim.RegisterFile;
 import mips.sim.UnsupportedInstructionException;
@@ -35,10 +38,13 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 public class NewProgramActivity extends ListActivity {
 
+    
+    List<Instruction> instructions;
+
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,22 +82,18 @@ public class NewProgramActivity extends ListActivity {
         	//do nothing; it's a new file
         }
         
-
-        
-        Memory memory = new Memory();
-        RegisterFile regFile = new RegisterFile();
+            Memory memory = new Memory();
+            RegisterFile regFile = new RegisterFile();
         
         instructions.add(new AddInstruction(memory, regFile, new Word(0)));
         
         Instruction[] insArr = (Instruction[]) instructions.toArray(new Instruction[0]);
         
-        //TODO: actually fetch instructions that have been added
         ListAdapter adapter = new InstructionObjectArrayAdapter(this, insArr);
         this.setListAdapter(adapter);
         
         //clicky button listener 
         //DOES NOT and CANNOT do list item clicks
-        //TODO: list click listener
         OnClickListener listener = new OnClickListener(){
             public void onClick(View view){
                 if (view.getId() == R.id.newInstructionButton){
@@ -110,6 +112,10 @@ public class NewProgramActivity extends ListActivity {
                 			
                 	}
                 }
+                
+                if (view.getId() == R.id.goButton){
+                    //TODO: GO!
+                }
             }
         };
         
@@ -117,21 +123,27 @@ public class NewProgramActivity extends ListActivity {
         OnItemClickListener listListener = new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                     int position, long id) {
+                
+                //FEATURE CUT!
                 //TODO: make it do real things
                 // selected item
-                String instruction = ((TextView) view).getText().toString();
+                //String instruction = ((TextView) view).getText().toString();
                 // bundling level, instruction
-                Intent intent = new Intent(getApplicationContext(), ItemDetailActivity.class);
+                //Intent intent = new Intent(getApplicationContext(), ItemDetailActivity.class);
                 //intent.putExtra("insruction", (Serializable)insArr[position]);
-                startActivity(intent);
+                //startActivity(intent);
             }
         };
         
         getListView().setOnItemClickListener(listListener);
 
         View instructionButton = findViewById(R.id.newInstructionButton);
+        View goButton = findViewById(R.id.goButton);
         if(instructionButton != null){
             instructionButton.setOnClickListener(listener);
+        }
+        if(goButton != null){
+            goButton.setOnClickListener(listener);
         }
         
         
@@ -143,5 +155,18 @@ public class NewProgramActivity extends ListActivity {
         getMenuInflater().inflate(R.menu.new_instruction, menu);
         return true;
     }
-
+    
+    protected void onRestart(){
+        
+        //if we got a instruction, add the instruction to the instruction list! 
+        Bundle extras = getIntent().getExtras();
+        if((extras != null) && extras.containsKey("instructions")){
+            
+            Bundle iBundle = extras.getBundle("instructions");
+            Set<String> keys = iBundle.keySet();
+            for (String s : keys){
+                instructions.add((Instruction)extras.getSerializable("s"));
+            }
+        }
+    }
 }

@@ -327,8 +327,4 @@ public class InstructionBuilder {
 		
 		return instr;
 	}
-	
-	public static void main(String[] args) throws UnsupportedInstructionException {
-		System.out.printf("0x%x\n", InstructionBuilder.buildInstruction("\tadd $t0, $t1, $t3")[0].asInt());
-	}
 }

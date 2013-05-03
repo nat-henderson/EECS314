@@ -8,10 +8,12 @@ import mips.sim.UnsupportedInstructionException;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -69,8 +71,22 @@ public class CreateInstructionActivity extends Activity {
 
             @Override
             public void onClick(View v) {
+                StringBuilder sb = new StringBuilder(instruction);
+                sb.append(" ");
+                sb.append((((Spinner)findViewById(R.id.spinner1)).getSelectedItem()).toString());
+                sb.append(" ");
+                sb.append(((Spinner)findViewById(R.id.spinner2)).getSelectedItem().toString());
+                if(findViewById(R.id.spinner3) != null){
+                    sb.append(" ");
+                    sb.append(((Spinner)findViewById(R.id.spinner3)).getSelectedItem().toString());
+                }
+                if(findViewById(R.id.immediate) != null){
+                    sb.append(" ");
+                    sb.append(((EditText)findViewById(R.id.immediate)).getText().toString());
+                }
                 try {
-                    Instruction[] instructions = InstructionBuilder.buildInstruction(instruction);
+                    Log.d("INFO", "string: " + sb.toString());
+                    Instruction[] instructions = InstructionBuilder.buildInstruction(sb.toString());
                     
                     Bundle instructionBundle = new Bundle();
                     for(int i = 0; i < instructions.length; i++){
@@ -90,6 +106,8 @@ public class CreateInstructionActivity extends Activity {
             }
             
         };
+        
+        findViewById(R.id.button1).setOnClickListener(listener);
         
     }
 

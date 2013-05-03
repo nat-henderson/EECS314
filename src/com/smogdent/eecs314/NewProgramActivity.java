@@ -19,6 +19,7 @@ import mips.sim.Memory;
 import mips.sim.RegisterFile;
 import mips.sim.UnsupportedInstructionException;
 import mips.sim.Word;
+import mips.sim.MIPSSystem.StageType;
 import mips.sim.instructions.AddInstruction;
 import android.os.Build;
 import android.os.Bundle;
@@ -41,6 +42,12 @@ public class NewProgramActivity extends ListActivity {
 
     
     List<Instruction> instructions = new ArrayList<Instruction>();
+    int idCycles = 1;
+    int exCycles = 1;
+    int memCycles = 1;
+    int wbCycles = 1;
+    boolean exToEx = false;
+    boolean memToEx = false;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -137,8 +144,23 @@ public class NewProgramActivity extends ListActivity {
                 }
                 
                 else if (view.getId() == R.id.goButton){
-                	MIPSSystem system = new MIPSSystem(instructions, 1,1,1,1);
-                	// do stuff
+                	MIPSSystem system = new MIPSSystem(instructions, 
+                			idCycles,exCycles,memCycles,wbCycles);
+                	if (exToEx) {
+                		system.setupForwarding(StageType.EX, StageType.EX);
+                	}
+                	if (memToEx) {
+                		system.setupForwarding(StageType.MEM, StageType.EX);
+                	}
+                	while (!system.isDone()) {
+                		system.run();
+                	}
+                	StringBuilder output = new StringBuilder();
+                	output.append("Number of instructions:  " + system.numberOfInstructions() + "\n");
+                	output.append("Stall percentage:  " + system.getStallPercentage() + "\n");
+                	output.append("Frequency:   " + system.getFrequency() + "\n");
+                	output.append("Time to completion:  " + system.getTimeInSecondsSoFar() + "s\n");
+                	// TODO:  code to open up the display window!
                 }
             }
         };
@@ -194,9 +216,29 @@ public class NewProgramActivity extends ListActivity {
                 Set<String> keys = iBundle.keySet();
                 Log.d("INFO", "got key set sized " + keys.size());
                 for (String s : keys){
-                    instructions.add((Instruction)iBundle.getSerializable(s));
-                    Log.d("INFO", "got instruction: " + s + " to " + iBundle.getSerializable(s));
+                	Instruction out = (Instruction)iBundle.getSerializable(s);
+                	if (out != null) {
+                		instructions.add(out);
+                    	Log.d("INFO", "got instruction: " + s + " to " + iBundle.getSerializable(s));
+                	}
                 }
+            }
+            else if (extras != null && extras.containsKey("settings")){
+            	Bundle sBundle = extras.getBundle("settings");
+            	this.idCycles = sBundle.getInt("idCycles");
+            	this.exCycles = sBundle.getInt("exCycles");
+            	this.memCycles = sBundle.getInt("memCycles");
+            	this.wbCycles = sBundle.getInt("wbCycles");
+            	if (sBundle.getBoolean("memToEx")) {
+            		this.memToEx = true;
+            	} else {
+            		this.memToEx = false;
+            	}
+            	if (sBundle.getBoolean("exToEx")) {
+            		this.exToEx = true;
+            	} else {
+            		this.exToEx = false;
+            	}            	
             }
         }
         Instruction[] insArr = (Instruction[]) instructions.toArray(new Instruction[0]);

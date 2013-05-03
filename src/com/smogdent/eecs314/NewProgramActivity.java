@@ -150,6 +150,10 @@ public class NewProgramActivity extends ListActivity {
                 	}
                 	// TODO:  code to open up the display window!
                 }
+                
+                else if (view.getId() == R.id.settingsButton){
+                    startActivity(new Intent(getApplicationContext(), PipelineSettings.class));
+                }
             }
         };
         
@@ -173,11 +177,15 @@ public class NewProgramActivity extends ListActivity {
 
         View instructionButton = findViewById(R.id.newInstructionButton);
         View goButton = findViewById(R.id.goButton);
+        View settingsButton = findViewById(R.id.settingsButton);
         if(instructionButton != null){
             instructionButton.setOnClickListener(listener);
         }
         if(goButton != null){
             goButton.setOnClickListener(listener);
+        }
+        if(settingsButton != null){
+            settingsButton.setOnClickListener(listener);
         }
         
         

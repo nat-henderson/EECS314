@@ -16,6 +16,7 @@ import java.util.Set;
 import mips.sim.Instruction;
 import mips.sim.MIPSSystem;
 import mips.sim.Memory;
+import mips.sim.Register;
 import mips.sim.RegisterFile;
 import mips.sim.UnsupportedInstructionException;
 import mips.sim.Word;
@@ -160,6 +161,10 @@ public class NewProgramActivity extends ListActivity {
                 	output.append("Stall percentage:  " + system.getStallPercentage() + "\n");
                 	output.append("Frequency:   " + system.getFrequency() + "\n");
                 	output.append("Time to completion:  " + system.getTimeInSecondsSoFar() + "s\n");
+                	for (int i = 0; i < 34; i++) {
+                		Register r = system.getRegFile().getRegister(i);
+                		output.append("Register " + Instruction.lookup(r.getId()) + ":  " + r.getWord().asInt());
+                	}
                 	// TODO:  code to open up the display window!
                 }
             }
@@ -238,7 +243,7 @@ public class NewProgramActivity extends ListActivity {
             		this.exToEx = true;
             	} else {
             		this.exToEx = false;
-            	}            	
+            	}
             }
         }
         Instruction[] insArr = (Instruction[]) instructions.toArray(new Instruction[0]);

@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.View;
 
 public class MainActivity extends Activity{
+	
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,8 @@ public class MainActivity extends Activity{
         	
         	if(Environment.MEDIA_MOUNTED.equals(state) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
         		//either we can read or we can read and write, so we can definitely load
+        		DialogFragment dialog = new LoadFileDialogFragment();
+        		dialog.show(getFragmentManager(), "LoadFileDialogFragment");
         		//startActivity(new Intent(this, loadProgramActivity.class));
         	}
         	else {
@@ -42,5 +46,8 @@ public class MainActivity extends Activity{
         	}
         }
     }
+
+    
+
 
 }

@@ -1,5 +1,6 @@
 package com.smogdent.eecs314;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class LoadProgramActivity extends ListActivity{
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_load_program);
-		
+		File file = getExternalFilesDir(null);
 //		String[] fileList = getResources().getStringArray(R.array.files);
 //		ArrayAdapter<String> adapter = new ArrayAdapter(this, fileList);
 //		this.setListAdapter(adapter);

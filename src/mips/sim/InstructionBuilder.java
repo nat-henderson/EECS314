@@ -88,7 +88,7 @@ public class InstructionBuilder {
 			return buildJTypeInstruction(line, lowerCaseInstruction, s);
 		}
 		else{
-			throw new UnsupportedInstructionException();
+			return buildPseudoInstruction(line, lowerCaseInstruction, s);
 		}
 	}
 		
@@ -341,7 +341,8 @@ public class InstructionBuilder {
 		return instr;
 	}
 	
-	private static Instruction[] buildPseudoInstruction(String line, String instruction, Scanner s) {
+	private static Instruction[] buildPseudoInstruction(String line, String instruction, Scanner s) 
+			throws UnsupportedInstructionException {
 		int registerLeft = registerMap.get(s.next().replaceAll(",", ""));
 		int registerRight = registerMap.get(s.next().replaceAll(",", ""));
 		int registerAt = 0x01;
@@ -354,15 +355,29 @@ public class InstructionBuilder {
 		Instruction[] instr = new Instruction[2];
 		
 		if (instruction.equals("blt")) {
-			
+			Word set = new Word( slt | (registerAt << 11) | (registerLeft << 16) | (registerRight << 21));
+			instr[0] = new SetLessThanInstruction(memory, regFile, set);
+			Word branch = new Word(immediate | (registerAt << 21) | (beq << 26));
+			instr[1] = new BranchOnEqualInstruction(memory, regFile, branch);
 		} else if (instruction.equals("bgt")) {
-			
+			Word set = new Word( slt | (registerAt << 11) | (registerRight << 16) | (registerLeft << 21));
+			instr[0] = new SetLessThanInstruction(memory, regFile, set);
+			Word branch = new Word(immediate | (registerAt << 21) | (beq << 26));
+			instr[1] = new BranchOnNotEqualInstruction(memory, regFile, branch);
 		} else if (instruction.equals("ble")) {
-			
+			Word set = new Word( slt | (registerAt << 11) | (registerRight << 16) | (registerLeft << 21));
+			instr[0] = new SetLessThanInstruction(memory, regFile, set);
+			Word branch = new Word(immediate | (registerAt << 21) | (beq << 26));
+			instr[1] = new BranchOnEqualInstruction(memory, regFile, branch);
 		} else if (instruction.equals("bge")) {
-			
+			Word set = new Word( slt | (registerAt << 11) | (registerLeft << 16) | (registerRight << 21));
+			instr[0] = new SetLessThanInstruction(memory, regFile, set);
+			Word branch = new Word(immediate | (registerAt << 21) | (beq << 26));
+			instr[1] = new BranchOnEqualInstruction(memory, regFile, branch);
+		} else {
+			throw new UnsupportedInstructionException();
 		}
 		
-		return null;
+		return instr;
 	}
 }

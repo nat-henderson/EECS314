@@ -5,9 +5,11 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -67,12 +69,26 @@ public class InstructionListActivity extends ListActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                     int position, long id) {
 
-                // selected item
-                String instruction = ((TextView) view).getText().toString();
+                String instruction = "";
+                
+                // find first text item
+                if (view instanceof ViewGroup){
+                    int count = ((ViewGroup)view).getChildCount();
+                    for(int i = 0; i < count; i++){
+                        View child = ((ViewGroup)view).getChildAt(i);
+                        if (child instanceof TextView){
+                            instruction =((TextView)child).getText().toString();
+                            break;
+                        }
+                    }
+                }
+                        
+                
                 // bundling level, instruction
-                Bundle bundle = new Bundle();
-                bundle.putString("instruction", instruction);
-                startActivity(new Intent(getApplicationContext(), ItemDetailActivity.class),bundle);
+                Intent intent = new Intent(getApplicationContext(), CreateInstructionActivity.class);
+                intent.putExtra("instruction", instruction);
+                
+                startActivity(intent);
 
             }
         });

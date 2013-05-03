@@ -138,6 +138,7 @@
     <string name="title_activity_created_instruction_detail">CreatedInstructionDetail</string>
     <string name="title_activity_create_instruction">CreateInstructionActivity</string>
     <string name="dialog_load_failed">Sorry, but your storage is not working properly and we can\'t allow you to load your file.</string>
+    <string name="dialog_save_success">File Saved!</string>
     <string name="OK">OK</string>
     <string name="cancel">Cancel</string>
 

@@ -104,11 +104,12 @@ public final class R {
         public static final int new_instruction=0x7f080004;
     }
     public static final class string {
-        public static final int OK=0x7f050010;
+        public static final int OK=0x7f050011;
         public static final int action_settings=0x7f050003;
         public static final int app_name=0x7f050000;
-        public static final int cancel=0x7f050011;
+        public static final int cancel=0x7f050012;
         public static final int dialog_load_failed=0x7f05000f;
+        public static final int dialog_save_success=0x7f050010;
         public static final int emulate_mips=0x7f050009;
         public static final int hello_world=0x7f050004;
         public static final int load_file=0x7f050005;

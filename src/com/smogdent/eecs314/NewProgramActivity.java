@@ -5,9 +5,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -23,6 +25,7 @@ import android.os.Environment;
 import android.annotation.TargetApi;
 import android.app.DialogFragment;
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
@@ -35,7 +38,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class NewProgramActivity extends ListActivity {
 
     
-    List<Instruction> instructions;
+    List<Instruction> instructions = new ArrayList<Instruction>();
 
     
     @Override
@@ -44,7 +47,6 @@ public class NewProgramActivity extends ListActivity {
         setContentView(R.layout.activity_new_program);
         Bundle extras = getIntent().getExtras();
         String whatIsThisFile = extras.getString("chosenfile");
-        List<Instruction> instructions = new ArrayList<Instruction>();
         if(!whatIsThisFile.equals("NEW_FILE")) {
         	//it's a saved file, have to actually load it
         	try{
@@ -100,6 +102,20 @@ public class NewProgramActivity extends ListActivity {
                 		String root = Environment.getExternalStorageDirectory().toString();
                 		File directory = new File(root + "/com.smogdent.eecs314");
                 		directory.mkdirs();
+                		Date date = new Date();
+                		String fileName = "File " + date.getTime();
+                		File file = new File(getExternalFilesDir(null), fileName);
+                		try{
+                			Instruction i;
+                			FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
+                			while((i = instructions.remove(0)) != null) {
+                				fos.write(i.toString().getBytes());
+                			}
+                			fos.close();
+                		}
+                		catch(Exception e){
+                			
+                		}
                 		DialogFragment dialog = new SaveFileDialogFragment();
                 		dialog.show(getFragmentManager(), "SaveFileDialogFragment");
                 			

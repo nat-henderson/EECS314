@@ -42,38 +42,31 @@ public final class R {
     }
     public static final class id {
         public static final int OKButton=0x7f09000a;
-        public static final int action_settings=0x7f09002a;
+        public static final int action_settings=0x7f090023;
         public static final int description=0x7f090003;
-        public static final int editText1=0x7f090018;
-        public static final int editText2=0x7f09001a;
-        public static final int editText3=0x7f090017;
-        public static final int editText4=0x7f09001b;
-        public static final int exCycles=0x7f090021;
-        public static final int exToEx=0x7f090026;
-        public static final int goButton=0x7f090013;
+        public static final int exCycles=0x7f090018;
+        public static final int exToEx=0x7f09001e;
+        public static final int goButton=0x7f090012;
         public static final int gridLayout1=0x7f09000b;
-        public static final int idCycles=0x7f090020;
-        public static final int immediate=0x7f090029;
+        public static final int idCycles=0x7f090017;
+        public static final int immediate=0x7f090022;
         public static final int inputLayout=0x7f090005;
         public static final int inputs=0x7f090004;
-        public static final int item_detail=0x7f090028;
+        public static final int item_detail=0x7f090021;
         public static final int item_detail_container=0x7f09000d;
         public static final int item_list=0x7f09000e;
         public static final int list=0x7f09000c;
-        public static final int ll=0x7f090024;
+        public static final int ll=0x7f09001c;
         public static final int loadButton=0x7f09000f;
-        public static final int memCycles=0x7f090022;
-        public static final int memToEx=0x7f090027;
+        public static final int memCycles=0x7f09001a;
+        public static final int memToEx=0x7f09001f;
         public static final int name=0x7f090001;
         public static final int newButton=0x7f090010;
-        public static final int newInstructionButton=0x7f090014;
-        public static final int newinstlayout=0x7f090012;
-        public static final int noForwarding=0x7f090025;
-        public static final int pipelineButton=0x7f090011;
-        public static final int radioButton1=0x7f09001c;
-        public static final int radioButton2=0x7f09001d;
-        public static final int radioButton3=0x7f09001e;
-        public static final int saveButton=0x7f090015;
+        public static final int newInstructionButton=0x7f090015;
+        public static final int newinstlayout=0x7f090011;
+        public static final int noForwarding=0x7f09001d;
+        public static final int saveButton=0x7f090013;
+        public static final int settingsButton=0x7f090014;
         public static final int spinner1=0x7f090006;
         public static final int spinner2=0x7f090007;
         public static final int spinner3=0x7f090008;
@@ -81,9 +74,9 @@ public final class R {
         public static final int tableRow2=0x7f090019;
         public static final int tableRow3=0x7f090009;
         public static final int tableRow4=0x7f090000;
-        public static final int tableRow5=0x7f09001f;
-        public static final int textView1=0x7f090016;
-        public static final int wbCycles=0x7f090023;
+        public static final int tableRow5=0x7f090020;
+        public static final int text=0x7f090016;
+        public static final int wbCycles=0x7f09001b;
     }
     public static final class layout {
         public static final int activity_catagory_list=0x7f030000;

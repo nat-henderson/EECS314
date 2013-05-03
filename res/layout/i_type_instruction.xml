@@ -62,7 +62,7 @@
                     android:layout_weight="1" />
 
                 <EditText
-                    android:id="@+id/editText1"
+                    android:id="@+id/immediate"
                     android:layout_width="66dp"
                     android:layout_height="match_parent"
                     android:ems="10"

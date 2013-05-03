@@ -44,9 +44,9 @@ public final class R {
         public static final int action_settings=0x7f090017;
         public static final int button1=0x7f09000a;
         public static final int description=0x7f090003;
-        public static final int editText1=0x7f090016;
         public static final int goButton=0x7f090012;
         public static final int gridLayout1=0x7f09000b;
+        public static final int immediate=0x7f090016;
         public static final int inputLayout=0x7f090005;
         public static final int inputs=0x7f090004;
         public static final int item_detail=0x7f090015;

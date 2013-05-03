@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -69,6 +70,19 @@ public class CreateInstructionActivity extends Activity {
 
             @Override
             public void onClick(View v) {
+                StringBuilder sb = new StringBuilder(instruction);
+                sb.append(" ");
+                sb.append((((Spinner)findViewById(R.id.spinner1)).getSelectedItem()).toString());
+                sb.append(" ");
+                sb.append(((Spinner)findViewById(R.id.spinner2)).getSelectedItem().toString());
+                if(findViewById(R.id.spinner3) != null){
+                    sb.append(" ");
+                    sb.append(((Spinner)findViewById(R.id.spinner3)).getSelectedItem().toString());
+                }
+                if(findViewById(R.id.immediate) != null){
+                    sb.append(" ");
+                    sb.append(((EditText)findViewById(R.id.immediate)).getText().toString());
+                }
                 try {
                     Instruction[] instructions = InstructionBuilder.buildInstruction(instruction);
                     
@@ -90,6 +104,8 @@ public class CreateInstructionActivity extends Activity {
             }
             
         };
+        
+        
         
     }
 

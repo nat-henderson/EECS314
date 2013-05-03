@@ -46,6 +46,30 @@ public class MIPSSystem {
 	public MIPSSystem() {
 		this(new ArrayList<Instruction>(), 1,1,1,1);
 	}
+	
+	public boolean isDone() {
+		for (Instruction i : this.idStage.instructions) {
+			if (i != null) {
+				return false;
+			}
+		}
+		for (Instruction i : this.eStage.instructions) {
+			if (i != null) {
+				return false;
+			}
+		}
+		for (Instruction i : this.mStage.instructions) {
+			if (i != null) {
+				return false;
+			}
+		}
+		for (Instruction i : this.wStage.instructions) {
+			if (i != null) {
+				return false;
+			}
+		}
+		return true;
+	}
 		
 	public MIPSSystem(List<Instruction> initialInstructions, int idSteps, int eSteps,
 			int mSteps, int wbSteps) {
@@ -68,12 +92,18 @@ public class MIPSSystem {
 		for (int i = 0; i < 32; i++) {
 			this.registersInUse.put(i, 0);
 		}
+		this.memory = new Memory();
+		this.registers = new RegisterFile();
 		system = this;
 	}
 	
 	public int length() {
 		return this.idStage.size() + this.eStage.size() + 
 				this.mStage.size() + this.wStage.size();
+	}
+	
+	public int numberOfInstructions() {
+		return this.nInstructions;
 	}
 	
 	public float getFrequency() {

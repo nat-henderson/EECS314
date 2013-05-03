@@ -32,6 +32,9 @@ public class MainActivity extends Activity{
         	DialogFragment dialog = new LoadFileDialogFragment();
         	dialog.show(getFragmentManager(), "LoadFileDialogFragment");	
         }
+        else if (view.getId() == R.id.pipelineButton){
+            startActivity(new Intent(this, PipelineSettings.class));
+        }
     }
 
     

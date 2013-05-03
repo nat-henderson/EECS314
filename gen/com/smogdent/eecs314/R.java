@@ -41,15 +41,15 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f090016;
+        public static final int action_settings=0x7f090017;
         public static final int button1=0x7f09000a;
         public static final int description=0x7f090003;
-        public static final int editText1=0x7f090015;
+        public static final int editText1=0x7f090016;
         public static final int goButton=0x7f090012;
         public static final int gridLayout1=0x7f09000b;
         public static final int inputLayout=0x7f090005;
         public static final int inputs=0x7f090004;
-        public static final int item_detail=0x7f090014;
+        public static final int item_detail=0x7f090015;
         public static final int item_detail_container=0x7f09000d;
         public static final int item_list=0x7f09000e;
         public static final int list=0x7f09000c;
@@ -58,6 +58,7 @@ public final class R {
         public static final int newButton=0x7f090010;
         public static final int newInstructionButton=0x7f090013;
         public static final int newinstlayout=0x7f090011;
+        public static final int saveButton=0x7f090014;
         public static final int spinner1=0x7f090006;
         public static final int spinner2=0x7f090007;
         public static final int spinner3=0x7f090008;
@@ -89,12 +90,11 @@ public final class R {
          */
         public static final int activity_item_list=0x7f030006;
         public static final int activity_item_twopane=0x7f030007;
-        public static final int activity_load_program=0x7f030008;
-        public static final int activity_main=0x7f030009;
-        public static final int activity_new_program=0x7f03000a;
-        public static final int fragment_item_detail=0x7f03000b;
-        public static final int i_type_instruction=0x7f03000c;
-        public static final int r_type_instruction=0x7f03000d;
+        public static final int activity_main=0x7f030008;
+        public static final int activity_new_program=0x7f030009;
+        public static final int fragment_item_detail=0x7f03000a;
+        public static final int i_type_instruction=0x7f03000b;
+        public static final int r_type_instruction=0x7f03000c;
     }
     public static final class menu {
         public static final int catagory_list=0x7f080000;
@@ -104,20 +104,21 @@ public final class R {
         public static final int new_instruction=0x7f080004;
     }
     public static final class string {
-        public static final int OK=0x7f05000f;
+        public static final int OK=0x7f050010;
         public static final int action_settings=0x7f050003;
         public static final int app_name=0x7f050000;
-        public static final int cancel=0x7f050010;
-        public static final int dialog_load_failed=0x7f05000e;
+        public static final int cancel=0x7f050011;
+        public static final int dialog_load_failed=0x7f05000f;
         public static final int emulate_mips=0x7f050009;
         public static final int hello_world=0x7f050004;
         public static final int load_file=0x7f050005;
         public static final int new_file=0x7f050006;
         public static final int new_instruction=0x7f050008;
-        public static final int title_activity_catagory_list=0x7f05000a;
-        public static final int title_activity_create_instruction=0x7f05000d;
-        public static final int title_activity_created_instruction_detail=0x7f05000c;
-        public static final int title_activity_group_list=0x7f05000b;
+        public static final int save_file=0x7f05000a;
+        public static final int title_activity_catagory_list=0x7f05000b;
+        public static final int title_activity_create_instruction=0x7f05000e;
+        public static final int title_activity_created_instruction_detail=0x7f05000d;
+        public static final int title_activity_group_list=0x7f05000c;
         public static final int title_activity_main=0x7f050002;
         public static final int title_activity_new_instruction=0x7f050007;
         public static final int title_item_detail=0x7f050001;

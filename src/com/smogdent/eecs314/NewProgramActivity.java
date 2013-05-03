@@ -1,6 +1,7 @@
 package com.smogdent.eecs314;
 
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,7 +13,9 @@ import mips.sim.Word;
 import mips.sim.instructions.AddInstruction;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.annotation.TargetApi;
+import android.app.DialogFragment;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.view.Menu;
@@ -34,7 +37,16 @@ public class NewProgramActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_program);
+        Bundle extras = getIntent().getExtras();
+        String whatIsThisFile = extras.getString("chosenfile");
         
+        if(!whatIsThisFile.equals("NEW_FILE")) {
+        	//it's a saved file, have to actually load it
+        	
+        }
+        else {
+        	//do nothing; it's a new file
+        }
         
         List<Instruction> instructions = new LinkedList<Instruction>();
         
@@ -56,6 +68,19 @@ public class NewProgramActivity extends ListActivity {
             public void onClick(View view){
                 if (view.getId() == R.id.newInstructionButton){
                     startActivity(new Intent(getApplicationContext(), CategoryListActivity.class));
+                }
+                else if(view.getId() == R.id.saveButton){
+                	String state = Environment.getExternalStorageState();
+                	
+                	if(Environment.MEDIA_MOUNTED.equals(state)) {
+                		//we can write to the media
+                		String root = Environment.getExternalStorageDirectory().toString();
+                		File directory = new File(root + "/com.smogdent.eecs314");
+                		directory.mkdirs();
+                		DialogFragment dialog = new SaveFileDialogFragment();
+                		dialog.show(getFragmentManager(), "SaveFileDialogFragment");
+                			
+                	}
                 }
             }
         };

@@ -7,7 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -44,7 +44,7 @@ public class NewProgramActivity extends ListActivity {
         setContentView(R.layout.activity_new_program);
         Bundle extras = getIntent().getExtras();
         String whatIsThisFile = extras.getString("chosenfile");
-        List<Instruction> instructions = new LinkedList<Instruction>();
+        List<Instruction> instructions = new ArrayList<Instruction>();
         if(!whatIsThisFile.equals("NEW_FILE")) {
         	//it's a saved file, have to actually load it
         	try{

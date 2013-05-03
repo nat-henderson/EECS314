@@ -44,7 +44,7 @@ public class MainActivity extends Activity{
         		dialog.show(getFragmentManager(), "LoadFailedDialogFragment");
         	}
         }
-        else if (view.getId() == R.id.pipelineButton){
+        else if (view.getId() == R.id.settingsButton){
             startActivity(new Intent(this, PipelineSettings.class));
         }
     }

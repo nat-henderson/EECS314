@@ -25,6 +25,12 @@ public abstract class Stage {
 	
 	protected abstract void execute();
 	
+	public abstract int getStageTimeInNs();
+	
+	public int getMaxFrequencyInHz() {
+		return (int)(1.0e9 / (getStageTimeInNs())) * this.numberOfCycles;
+	}
+	
 	public Instruction doExecute() {
 		this.execute();
 		if (!this.hasHadInsertThisCycle) {

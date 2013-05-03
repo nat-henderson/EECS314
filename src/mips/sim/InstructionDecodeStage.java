@@ -15,5 +15,7 @@ public class InstructionDecodeStage extends Stage {
 			}
 		}
 	}
-
+	public int getStageTimeInNs() {
+		return 120;
+	}
 }

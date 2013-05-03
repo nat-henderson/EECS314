@@ -14,5 +14,7 @@ public class WritebackStage extends Stage{
 			}
 		}
 	}
-
+	public int getStageTimeInNs() {
+		return 250;
+	}
 }

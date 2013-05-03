@@ -15,5 +15,9 @@ public class ExecuteStage extends Stage {
 			System.out.println(this.instructions.toString());
 		}
 	}
+	
+	public int getStageTimeInNs() {
+		return 400;
+	}
 
 }

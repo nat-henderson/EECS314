@@ -132,6 +132,7 @@
     <string name="title_activity_new_instruction">NewInstructionActivity</string>
     <string name="new_instruction">New Instruction</string>
     <string name="emulate_mips">Go!</string>
+    <string name="save_file">Save</string>
     <string name="title_activity_catagory_list">CatagoryListActivity</string>
     <string name="title_activity_group_list">GroupListActivity</string>
     <string name="title_activity_created_instruction_detail">CreatedInstructionDetail</string>

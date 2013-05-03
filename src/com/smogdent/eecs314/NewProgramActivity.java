@@ -1,14 +1,17 @@
 package com.smogdent.eecs314;
 
 
-import java.io.Serializable;
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 import mips.sim.Instruction;
-import mips.sim.InstructionBuilder;
 import mips.sim.Memory;
 import mips.sim.RegisterFile;
 import mips.sim.UnsupportedInstructionException;
@@ -16,18 +19,16 @@ import mips.sim.Word;
 import mips.sim.instructions.AddInstruction;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.annotation.TargetApi;
+import android.app.DialogFragment;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -41,8 +42,38 @@ public class NewProgramActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_program);
-                
-            instructions = new ArrayList<Instruction>();
+        Bundle extras = getIntent().getExtras();
+        String whatIsThisFile = extras.getString("chosenfile");
+        List<Instruction> instructions = new LinkedList<Instruction>();
+        if(!whatIsThisFile.equals("NEW_FILE")) {
+        	//it's a saved file, have to actually load it
+        	try{
+        		FileInputStream fis = openFileInput(whatIsThisFile);
+        		BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+        		String strLine;
+        		while((strLine = br.readLine()) != null) {
+       				Instruction[] arr = mips.sim.InstructionBuilder.buildInstruction(strLine);
+       				for(Instruction i : arr){
+       					instructions.add(i);
+       				}
+        		}
+        	}
+        	catch(FileNotFoundException e){
+        		DialogFragment dialog = new LoadFailedDialogFragment();
+        		dialog.show(getFragmentManager(), "LoadFailedDialogFragment");
+        	}
+        	catch(IOException e){
+        		
+        	}
+        	catch(UnsupportedInstructionException e){
+        		//YOU ARE BAD AND SHOULD FEEL BAD
+        		//TODO: Make a new dialog stating that.
+        	}
+
+        }
+        else {
+        	//do nothing; it's a new file
+        }
         
             Memory memory = new Memory();
             RegisterFile regFile = new RegisterFile();
@@ -61,8 +92,21 @@ public class NewProgramActivity extends ListActivity {
                 if (view.getId() == R.id.newInstructionButton){
                     startActivity(new Intent(getApplicationContext(), CategoryListActivity.class));
                 }
+                else if(view.getId() == R.id.saveButton){
+                	String state = Environment.getExternalStorageState();
+                	
+                	if(Environment.MEDIA_MOUNTED.equals(state)) {
+                		//we can write to the media
+                		String root = Environment.getExternalStorageDirectory().toString();
+                		File directory = new File(root + "/com.smogdent.eecs314");
+                		directory.mkdirs();
+                		DialogFragment dialog = new SaveFileDialogFragment();
+                		dialog.show(getFragmentManager(), "SaveFileDialogFragment");
+                			
+                	}
+                }
                 
-                if (view.getId() == R.id.goButton){
+                else if (view.getId() == R.id.goButton){
                     //TODO: GO!
                 }
             }
@@ -79,7 +123,7 @@ public class NewProgramActivity extends ListActivity {
                 //String instruction = ((TextView) view).getText().toString();
                 // bundling level, instruction
                 //Intent intent = new Intent(getApplicationContext(), ItemDetailActivity.class);
-                //intent.putExtra("insruction", (Serializable)insArr[position]);
+                //intent.putExtra("instruction", (Serializable)insArr[position]);
                 //startActivity(intent);
             }
         };

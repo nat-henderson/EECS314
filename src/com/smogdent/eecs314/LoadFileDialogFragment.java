@@ -35,7 +35,7 @@ public class LoadFileDialogFragment extends DialogFragment{
     		builder.setItems(mFileList, new DialogInterface.OnClickListener() {
     			public void onClick(DialogInterface dialog, int which) {
     				mChosenFile = mFileList[which];
-    				startActivity(new Intent(getActivity(), NewProgramActivity.class));
+    				startActivity(new Intent(getActivity(), NewProgramActivity.class).putExtra("chosenfile", mChosenFile));
     			}
     		});
     	dialog = builder.show();

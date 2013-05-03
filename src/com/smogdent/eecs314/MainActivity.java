@@ -27,7 +27,7 @@ public class MainActivity extends Activity{
     
     public void onClick(View view){
         if (view.getId() == R.id.newButton){
-            startActivity(new Intent(this, NewProgramActivity.class));
+            startActivity(new Intent(this, NewProgramActivity.class).putExtra("chosenfile", "NEW_FILE"));
         }
         else if(view.getId() == R.id.loadButton){
         	//check to see if the user can load and save files
@@ -37,7 +37,6 @@ public class MainActivity extends Activity{
         		//either we can read or we can read and write, so we can definitely load
         		DialogFragment dialog = new LoadFileDialogFragment();
         		dialog.show(getFragmentManager(), "LoadFileDialogFragment");
-        		//startActivity(new Intent(this, loadProgramActivity.class));
         	}
         	else {
         		//We are in some other state with regards to file storage, best not to load

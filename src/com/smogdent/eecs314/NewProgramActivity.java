@@ -82,6 +82,7 @@ public class NewProgramActivity extends ListActivity {
         			Log.e("INFO", "You tried to use an unsupported instruction.");
         		}
         	}
+        	mDb.close();
 
         }
         else {
